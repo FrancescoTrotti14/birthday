@@ -219,6 +219,29 @@
   }
   @keyframes rise { to { transform: translateY(calc(-100vh - 260px)) translateX(var(--drift, 0)); } }
 
+  /* Giaguari e dottoresse */
+  .floater {
+    position: fixed; bottom: -120px; z-index: 1; font-size: 56px; line-height: 1;
+    animation: rise linear forwards; cursor: pointer; user-select: none;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,.3));
+  }
+  .runner {
+    position: fixed; bottom: 18px; left: 100vw; z-index: 3; font-size: 70px; line-height: 1;
+    pointer-events: none; animation: run 5s linear forwards;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,.35));
+  }
+  .runner span { display: inline-block; animation: gallop .3s infinite alternate ease-in-out; }
+  @keyframes run { to { transform: translateX(calc(-100vw - 260px)); } }
+  @keyframes gallop { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-14px) rotate(4deg); } }
+  .peek { font-size: 2.6rem; margin-bottom: 18px; letter-spacing: 8px; }
+  .peek span { display: inline-block; animation: bounce 1.4s infinite ease-in-out; }
+  .peek span:nth-child(2) { animation-delay: .2s; }
+  .peek span:nth-child(3) { animation-delay: .4s; }
+  .doc-badge {
+    display: inline-block; margin-top: 10px; padding: 6px 16px; border-radius: 999px;
+    background: rgba(255,255,255,.16); font-weight: 700; letter-spacing: .03em;
+  }
+
   .music-toggle {
     position: fixed; top: 14px; right: 14px; z-index: 60;
     width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
@@ -240,6 +263,7 @@
 <section class="screen" id="screenGift">
   <h1 class="gift-title fade-in">Ehi Elisa! 💌</h1>
   <p class="gift-sub fade-in">C'è una sorpresa per te... tocca il regalo!</p>
+  <div class="peek fade-in" aria-hidden="true"><span>🐆</span><span>👩‍⚕️</span><span>🐆</span></div>
   <button class="gift" id="gift" aria-label="Apri il regalo">
     <div class="box"><div class="ribbon-v"></div></div>
     <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
@@ -271,6 +295,7 @@
   <h1 class="big-title" id="bigTitle">Tanti auguri Elisa!</h1>
   <div class="age" id="age">0</div>
   <div class="age-label">anni di pura meraviglia</div>
+  <div class="doc-badge">👩‍⚕️ Dott.ssa Elisa · grinta da giaguaro 🐆</div>
 
   <div class="card fade-in">
     <p>Cara Elisa,</p>
@@ -280,6 +305,8 @@
       (come me, ovviamente 😄).</p>
     <p>Continua a essere esattamente come sei: unica.
       Goditi ogni momento di questa giornata, te lo meriti tutto!</p>
+    <p>Che tu possa affrontare tutto con la grinta di un giaguaro 🐆
+      e prenderti cura del mondo come solo una grande dottoressa sa fare 👩‍⚕️.</p>
     <p class="sign">Buon compleanno! 🥳</p>
   </div>
 
@@ -287,6 +314,8 @@
     <div class="fact"><b id="days">0</b><small>giorni vissuti</small></div>
     <div class="fact"><b id="hearts">0</b><small>battiti del cuore (circa!)</small></div>
     <div class="fact"><b>∞</b><small>motivi per festeggiarti</small></div>
+    <div class="fact"><b>🐆</b><small>livello di grinta: giaguaro</small></div>
+    <div class="fact"><b>👩‍⚕️</b><small>diagnosi: troppo speciale</small></div>
   </div>
 
   <button class="btn" id="againBtn">🎈 Ancora coriandoli!</button>
@@ -347,7 +376,8 @@
         rot: Math.random() * 360, vr: (Math.random() - .5) * 14,
         color: colors[(Math.random() * colors.length) | 0],
         life: 0, max: 160 + Math.random() * 80,
-        circle: Math.random() < .25
+        circle: Math.random() < .25,
+        emoji: Math.random() < .12 ? (Math.random() < .5 ? '🐆' : '👩‍⚕️') : null
       });
     }
     if (!rafId) loop();
@@ -366,7 +396,8 @@
       ctx.globalAlpha = Math.max(0, 1 - p.life / p.max);
       ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
       ctx.fillStyle = p.color;
-      if (p.circle) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill(); }
+      if (p.emoji) { ctx.font = '26px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(p.emoji, 0, 0); }
+      else if (p.circle) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill(); }
       else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
       ctx.restore();
     }
@@ -523,6 +554,17 @@
     countUp($('hearts'), Math.round(days * 24 * 60 * 75), 2600, true);
 
     launchBalloons();
+    runJaguar();
+    setInterval(runJaguar, 12000);
+  }
+
+  // Un giaguaro che attraversa lo schermo, a volte con la dottoressa al seguito
+  function runJaguar() {
+    const r = document.createElement('div');
+    r.className = 'runner';
+    r.innerHTML = Math.random() < .5 ? '<span>🐆</span>' : '<span>🐆</span> <span>👩‍⚕️</span>';
+    r.addEventListener('animationend', () => r.remove());
+    document.body.appendChild(r);
   }
 
   function countUp(el, target, ms, sep) {
@@ -545,9 +587,13 @@
   }
   function makeBalloon() {
     const b = document.createElement('div');
-    b.className = 'balloon';
-    const c = balloonColors[(Math.random() * balloonColors.length) | 0];
-    b.style.background = c;
+    if (Math.random() < .4) {
+      b.className = 'floater';
+      b.textContent = Math.random() < .5 ? '🐆' : '👩‍⚕️';
+    } else {
+      b.className = 'balloon';
+      b.style.background = balloonColors[(Math.random() * balloonColors.length) | 0];
+    }
     b.style.left = (Math.random() * 90) + 'vw';
     b.style.setProperty('--drift', ((Math.random() - .5) * 160) + 'px');
     b.style.animationDuration = (8 + Math.random() * 6) + 's';
@@ -563,6 +609,7 @@
   $('againBtn').addEventListener('click', () => {
     burst(200, innerWidth / 2, innerHeight / 2);
     launchBalloons();
+    runJaguar();
   });
 })();
 </script>
