@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buon compleanno Elisa!</title>
+<meta name="description" content="Tanti auguri Elisa per i tuoi 24 anni!">
+<meta property="og:title" content="🎂 Buon compleanno Elisa!">
+<meta property="og:description" content="Una sorpresa per i tuoi 24 anni. Aprila!">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #2b1055;
+    --bg2: #7597de;
+    --pink: #ff6fae;
+    --pink-dark: #e04a8e;
+    --cream: #fff4e6;
+    --gold: #ffd166;
+    --text: #fff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Quicksand', system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(160deg, var(--bg1) 0%, #6a3093 50%, var(--bg2) 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Stelline di sfondo */
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: #fff; opacity: .7; animation: twinkle 3s infinite ease-in-out;
+  }
+  @keyframes twinkle { 0%,100% { opacity: .2; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+
+  .screen {
+    position: relative; z-index: 2;
+    min-height: 100vh; width: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px 16px; text-align: center;
+  }
+  .hidden { display: none !important; }
+  .fade-in { animation: fadeIn 1s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+  h1, .script { font-family: 'Pacifico', cursive; font-weight: 400; }
+
+  /* ---------- SCHERMATA 1: regalo ---------- */
+  .gift-title { font-size: clamp(1.6rem, 6vw, 2.6rem); margin-bottom: 8px; }
+  .gift-sub { opacity: .85; margin-bottom: 40px; font-size: 1.05rem; }
+  .gift {
+    position: relative; width: 170px; height: 150px; cursor: pointer;
+    animation: wiggle 2.2s infinite ease-in-out; border: 0; background: none;
+  }
+  .gift:focus-visible { outline: 3px dashed var(--gold); outline-offset: 10px; border-radius: 12px; }
+  @keyframes wiggle {
+    0%, 70%, 100% { transform: rotate(0); }
+    75% { transform: rotate(-6deg); } 80% { transform: rotate(6deg); }
+    85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); }
+  }
+  .gift .box {
+    position: absolute; bottom: 0; left: 10px; width: 150px; height: 100px;
+    background: var(--pink); border-radius: 6px;
+    box-shadow: inset -12px 0 0 rgba(0,0,0,.08), 0 14px 30px rgba(0,0,0,.3);
+  }
+  .gift .lid {
+    position: absolute; top: 22px; left: 0; width: 170px; height: 34px;
+    background: var(--pink-dark); border-radius: 6px; transition: transform .6s cubic-bezier(.5,-0.5,.5,1.5);
+  }
+  .gift .ribbon-v { position: absolute; left: 50%; transform: translateX(-50%); width: 24px; height: 100%; background: var(--gold); }
+  .gift .bow { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); width: 70px; height: 30px; }
+  .gift .bow::before, .gift .bow::after {
+    content: ""; position: absolute; top: 0; width: 34px; height: 28px;
+    border: 7px solid var(--gold); border-radius: 50% 50% 0 50%;
+  }
+  .gift .bow::before { left: 0; transform: rotate(-20deg); }
+  .gift .bow::after { right: 0; transform: rotate(20deg) scaleX(-1); }
+  .gift.open .lid { transform: translateY(-120px) rotate(-25deg); }
+  .gift.open { animation: none; }
+
+  /* ---------- SCHERMATA 2: torta ---------- */
+  .wish { font-size: clamp(1.5rem, 6vw, 2.4rem); margin-bottom: 6px; }
+  .hint { opacity: .85; margin-bottom: 26px; min-height: 1.4em; }
+
+  .cake-wrap { position: relative; width: 280px; max-width: 90vw; height: 330px; }
+  .plate {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 300px; max-width: 96vw; height: 26px; border-radius: 50%;
+    background: radial-gradient(ellipse at center, #fff 0%, #dcdcf0 70%);
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+  }
+  .layer {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    border-radius: 14px 14px 10px 10px;
+  }
+  .layer.bottom { bottom: 12px; width: 250px; height: 90px; background: #8d5a3b; }
+  .layer.top    { bottom: 96px; width: 200px; height: 78px; background: #a8704b; }
+  .frosting {
+    position: absolute; top: -6px; left: -4px; right: -4px; height: 30px;
+    background: var(--cream); border-radius: 14px;
+  }
+  .frosting::after {
+    /* gocce di glassa */
+    content: ""; position: absolute; top: 18px; left: 6px; right: 6px; height: 22px;
+    background:
+      radial-gradient(circle at 10px 0, var(--cream) 10px, transparent 11px) 0 0 / 36px 22px repeat-x;
+  }
+  .sprinkles { position: absolute; inset: 34px 10px 10px; }
+  .sprinkle { position: absolute; width: 10px; height: 4px; border-radius: 3px; }
+
+  .candles {
+    position: absolute; bottom: 168px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+  .candle { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+  .candle .num {
+    font-family: 'Pacifico', cursive; font-size: 96px; line-height: 1;
+    background: repeating-linear-gradient(135deg, var(--pink) 0 12px, #fff 12px 22px);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,.6);
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,.3));
+    margin-top: -6px;
+  }
+  .wick { width: 3px; height: 14px; background: #333; border-radius: 2px; }
+  .flame {
+    position: absolute; top: -40px; left: 50%; width: 22px; height: 36px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 70%, #fff 0%, #ffe066 35%, #ff9f1c 65%, rgba(255,80,0,0) 75%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker .15s infinite alternate;
+    transform-origin: 50% 100%;
+    box-shadow: 0 0 30px 10px rgba(255,200,80,.45);
+  }
+  @keyframes flicker {
+    from { transform: translateX(-50%) scale(1, 1) rotate(-2deg); }
+    to   { transform: translateX(-50%) scale(.92, 1.08) rotate(2deg); }
+  }
+  .candle.out .flame { animation: blowOut .5s forwards; }
+  @keyframes blowOut { to { opacity: 0; transform: translateX(-50%) scale(.2, .1) translateY(10px); } }
+  .smoke {
+    position: absolute; top: -30px; left: 50%; width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(220,220,220,.6); opacity: 0; pointer-events: none;
+  }
+  .candle.out .smoke { animation: smoke 2s ease-out forwards; }
+  @keyframes smoke {
+    0% { opacity: .7; transform: translate(-50%, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-30%, -80px) scale(4); }
+  }
+
+  .btn {
+    margin-top: 28px; border: 0; cursor: pointer;
+    font: 700 1.05rem 'Quicksand', sans-serif; color: #fff;
+    padding: 14px 28px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--pink), #ff9a8b);
+    box-shadow: 0 8px 22px rgba(255,111,174,.45);
+    transition: transform .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: scale(.97); }
+  .btn.ghost { background: rgba(255,255,255,.15); box-shadow: none; font-weight: 600; font-size: .95rem; padding: 10px 20px; margin-top: 12px; }
+
+  .mic-meter { width: 180px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.2); margin: 14px auto 0; overflow: hidden; }
+  .mic-meter > div { height: 100%; width: 0; background: var(--gold); transition: width .08s; }
+
+  /* ---------- SCHERMATA 3: auguri ---------- */
+  .big-title {
+    font-size: clamp(2.4rem, 11vw, 5rem); line-height: 1.15;
+    text-shadow: 0 4px 0 var(--pink-dark), 0 10px 30px rgba(0,0,0,.35);
+  }
+  .big-title span { display: inline-block; animation: bounce 1.6s infinite ease-in-out; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  .age {
+    margin: 18px auto 6px; width: 140px; height: 140px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: radial-gradient(circle at 30% 30%, #ffe8a3, var(--gold) 60%, #f4a261);
+    color: #6a3093; font: 700 4rem 'Quicksand', sans-serif;
+    box-shadow: 0 0 0 8px rgba(255,255,255,.18), 0 15px 40px rgba(0,0,0,.35);
+    animation: pop .8s cubic-bezier(.2,1.6,.4,1) both .3s;
+  }
+  @keyframes pop { from { transform: scale(0) rotate(-90deg); } to { transform: none; } }
+  .age-label { opacity: .9; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .85rem; }
+
+  .card {
+    margin-top: 30px; max-width: 520px; width: 100%;
+    background: rgba(255,255,255,.12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 22px; padding: 26px 22px; line-height: 1.65; font-size: 1.07rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  }
+  .card p + p { margin-top: 12px; }
+  .card .sign { font-family: 'Pacifico', cursive; font-size: 1.4rem; margin-top: 18px; color: var(--gold); }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 22px; width: 100%; max-width: 520px; }
+  .fact { background: rgba(255,255,255,.1); border-radius: 16px; padding: 14px 10px; }
+  .fact b { display: block; font-size: 1.5rem; color: var(--gold); }
+  .fact small { opacity: .85; }
+
+  .balloon {
+    position: fixed; bottom: -160px; z-index: 1; width: 60px; height: 76px; border-radius: 50% 50% 48% 48%;
+    animation: rise linear forwards; pointer-events: auto; cursor: pointer;
+    box-shadow: inset -8px -10px 0 rgba(0,0,0,.12);
+  }
+  .balloon::before { /* riflesso */
+    content: ""; position: absolute; top: 14px; left: 14px; width: 12px; height: 18px; border-radius: 50%; background: rgba(255,255,255,.45);
+  }
+  .balloon::after { /* filo */
+    content: ""; position: absolute; top: 100%; left: 50%; width: 1px; height: 80px; background: rgba(255,255,255,.6);
+  }
+  @keyframes rise { to { transform: translateY(calc(-100vh - 260px)) translateX(var(--drift, 0)); } }
+
+  .music-toggle {
+    position: fixed; top: 14px; right: 14px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(255,255,255,.18); color: #fff; font-size: 1.2rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<canvas id="confetti"></canvas>
+<button class="music-toggle hidden" id="musicToggle" aria-label="Musica on/off">🎵</button>
+
+<!-- 1. Regalo -->
+<section class="screen" id="screenGift">
+  <h1 class="gift-title fade-in">Ehi Elisa! 💌</h1>
+  <p class="gift-sub fade-in">C'è una sorpresa per te... tocca il regalo!</p>
+  <button class="gift" id="gift" aria-label="Apri il regalo">
+    <div class="box"><div class="ribbon-v"></div></div>
+    <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
+  </button>
+</section>
+
+<!-- 2. Torta -->
+<section class="screen hidden" id="screenCake">
+  <h1 class="wish fade-in">Esprimi un desiderio ✨</h1>
+  <p class="hint" id="hint">...e poi soffia sulle candeline!</p>
+
+  <div class="cake-wrap fade-in">
+    <div class="candles">
+      <div class="candle" data-candle><div class="flame"></div><div class="smoke"></div><div class="wick"></div><div class="num">2</div></div>
+      <div class="candle" data-candle><div class="flame"></div><div class="smoke"></div><div class="wick"></div><div class="num">4</div></div>
+    </div>
+    <div class="layer top"><div class="frosting"></div><div class="sprinkles"></div></div>
+    <div class="layer bottom"><div class="frosting"></div><div class="sprinkles"></div></div>
+    <div class="plate"></div>
+  </div>
+
+  <button class="btn" id="micBtn">🎤 Soffia nel microfono</button>
+  <div class="mic-meter hidden" id="micMeter"><div></div></div>
+  <button class="btn ghost" id="tapBtn">oppure tocca le candeline 👆</button>
+</section>
+
+<!-- 3. Auguri -->
+<section class="screen hidden" id="screenWish">
+  <h1 class="big-title" id="bigTitle">Tanti auguri Elisa!</h1>
+  <div class="age" id="age">0</div>
+  <div class="age-label">anni di pura meraviglia</div>
+
+  <div class="card fade-in">
+    <p>Cara Elisa,</p>
+    <p>oggi il mondo festeggia una persona speciale: <strong>tu</strong>! 🎉
+      Che questi 24 anni ti portino risate a crepapelle, avventure da ricordare,
+      sogni che diventano realtà e tanta, tantissima gente che ti vuole bene
+      (come me, ovviamente 😄).</p>
+    <p>Continua a essere esattamente come sei: unica.
+      Goditi ogni momento di questa giornata, te lo meriti tutto!</p>
+    <p class="sign">Buon compleanno! 🥳</p>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><b id="days">0</b><small>giorni vissuti</small></div>
+    <div class="fact"><b id="hearts">0</b><small>battiti del cuore (circa!)</small></div>
+    <div class="fact"><b>∞</b><small>motivi per festeggiarti</small></div>
+  </div>
+
+  <button class="btn" id="againBtn">🎈 Ancora coriandoli!</button>
+</section>
+
+<script>
+(() => {
+  const AGE = 24;
+  const $ = (id) => document.getElementById(id);
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Stelle ---------- */
+  const stars = $('stars');
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    const size = Math.random() * 2 + 1;
+    s.style.width = s.style.height = size + 'px';
+    stars.appendChild(s);
+  }
+
+  /* ---------- Codette sulla torta ---------- */
+  const sprinkleColors = ['#ff6fae', '#ffd166', '#06d6a0', '#118ab2', '#ef476f', '#fff'];
+  document.querySelectorAll('.sprinkles').forEach(box => {
+    for (let i = 0; i < 22; i++) {
+      const sp = document.createElement('div');
+      sp.className = 'sprinkle';
+      sp.style.left = Math.random() * 92 + '%';
+      sp.style.top = Math.random() * 80 + '%';
+      sp.style.background = sprinkleColors[i % sprinkleColors.length];
+      sp.style.transform = `rotate(${Math.random() * 180}deg)`;
+      box.appendChild(sp);
+    }
+  });
+
+  /* ---------- Coriandoli ---------- */
+  const canvas = $('confetti');
+  const ctx = canvas.getContext('2d');
+  let pieces = [];
+  let rafId = null;
+  function resize() { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; }
+  addEventListener('resize', resize); resize();
+
+  function burst(count = 180, x = innerWidth / 2, y = innerHeight / 3) {
+    if (reduceMotion) count = 40;
+    const colors = ['#ff6fae', '#ffd166', '#06d6a0', '#4cc9f0', '#f72585', '#ffffff', '#b5179e'];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 9 + 4;
+      pieces.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 6,
+        w: Math.random() * 8 + 5, h: Math.random() * 5 + 3,
+        rot: Math.random() * 360, vr: (Math.random() - .5) * 14,
+        color: colors[(Math.random() * colors.length) | 0],
+        life: 0, max: 160 + Math.random() * 80,
+        circle: Math.random() < .25
+      });
+    }
+    if (!rafId) loop();
+  }
+  function loop() {
+    const dpr = devicePixelRatio;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.scale(dpr, dpr);
+    pieces = pieces.filter(p => p.life < p.max && p.y < innerHeight + 40);
+    for (const p of pieces) {
+      p.life++;
+      p.vy += 0.22; p.vx *= 0.985; p.vy *= 0.985;
+      p.x += p.vx + Math.sin(p.life / 10); p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - p.life / p.max);
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      if (p.circle) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill(); }
+      else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    rafId = pieces.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, canvas.width, canvas.height), null);
+  }
+
+  /* ---------- Musica: "Tanti auguri a te" (WebAudio) ---------- */
+  let audioCtx = null;
+  let musicOn = true;
+  let musicTimer = null;
+  const N = { G4: 392, A4: 440, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99 };
+  const song = [
+    ['G4',.75],['G4',.25],['A4',1],['G4',1],['C5',1],['B4',2],
+    ['G4',.75],['G4',.25],['A4',1],['G4',1],['D5',1],['C5',2],
+    ['G4',.75],['G4',.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',2],
+    ['F5',.75],['F5',.25],['E5',1],['C5',1],['D5',1],['C5',3]
+  ];
+  function ensureAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+  function tone(freq, start, dur, vol = .18) {
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'triangle'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(vol, start + .03);
+    g.gain.exponentialRampToValueAtTime(.001, start + dur * .95);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(start); o.stop(start + dur);
+  }
+  function playSong() {
+    if (!musicOn) return;
+    ensureAudio();
+    const beat = .42;
+    let t = audioCtx.currentTime + .1;
+    for (const [n, d] of song) { tone(N[n], t, d * beat); t += d * beat; }
+    clearTimeout(musicTimer);
+    musicTimer = setTimeout(playSong, (t - audioCtx.currentTime + 2) * 1000);
+  }
+  function chime() {
+    ensureAudio();
+    const t = audioCtx.currentTime;
+    [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone(f, t + i * .08, .5, .12));
+  }
+  $('musicToggle').addEventListener('click', () => {
+    musicOn = !musicOn;
+    $('musicToggle').textContent = musicOn ? '🎵' : '🔇';
+    if (musicOn) playSong(); else { clearTimeout(musicTimer); if (audioCtx) audioCtx.suspend(); }
+    if (musicOn && audioCtx) audioCtx.resume();
+  });
+
+  /* ---------- Flusso ---------- */
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    $(id).classList.remove('hidden');
+    scrollTo(0, 0);
+  }
+
+  // 1 → 2: apri il regalo
+  $('gift').addEventListener('click', () => {
+    ensureAudio();
+    chime();
+    $('gift').classList.add('open');
+    const r = $('gift').getBoundingClientRect();
+    burst(120, r.left + r.width / 2, r.top + 20);
+    setTimeout(() => show('screenCake'), 1100);
+  }, { once: true });
+
+  // 2: candeline
+  const candles = [...document.querySelectorAll('[data-candle]')];
+  let blown = false;
+  function blowCandle(c) {
+    if (c.classList.contains('out')) return;
+    c.classList.add('out');
+    if (candles.every(x => x.classList.contains('out'))) finish();
+  }
+  candles.forEach(c => c.addEventListener('click', () => blowCandle(c)));
+  $('tapBtn').addEventListener('click', () => {
+    $('hint').textContent = 'Tocca ogni candelina per spegnerla 🕯️';
+  });
+
+  // Microfono: soffiare spegne le candeline
+  let micStream = null;
+  $('micBtn').addEventListener('click', async () => {
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      $('hint').textContent = 'Microfono non disponibile: tocca le candeline! 👆';
+      $('micBtn').classList.add('hidden');
+      return;
+    }
+    ensureAudio();
+    const src = audioCtx.createMediaStreamSource(micStream);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
+    src.connect(analyser);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    const meter = $('micMeter');
+    meter.classList.remove('hidden');
+    $('micBtn').classList.add('hidden');
+    $('hint').textContent = 'Ora soffia forte! 💨';
+    let loud = 0;
+    (function listen() {
+      if (blown) return;
+      analyser.getByteFrequencyData(data);
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) sum += data[i];
+      const avg = sum / data.length;
+      meter.firstElementChild.style.width = Math.min(100, avg * 1.6) + '%';
+      loud = avg > 45 ? loud + 1 : Math.max(0, loud - 1);
+      if (loud > 6) {
+        const lit = candles.find(c => !c.classList.contains('out'));
+        if (lit) blowCandle(lit);
+        loud = 0;
+      }
+      requestAnimationFrame(listen);
+    })();
+  });
+
+  function finish() {
+    if (blown) return;
+    blown = true;
+    if (micStream) micStream.getTracks().forEach(t => t.stop());
+    $('hint').textContent = 'Desiderio espresso! 🌟';
+    setTimeout(() => {
+      show('screenWish');
+      celebrate();
+    }, 1300);
+  }
+
+  // 3: festa
+  function celebrate() {
+    // titolo con lettere che saltellano
+    const title = $('bigTitle');
+    const text = title.textContent;
+    title.innerHTML = '';
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.textContent = ch === ' ' ? ' ' : ch;
+      s.style.animationDelay = (i * 0.07) + 's';
+      title.appendChild(s);
+    });
+
+    $('musicToggle').classList.remove('hidden');
+    playSong();
+
+    burst(220, innerWidth * .25, innerHeight * .35);
+    setTimeout(() => burst(220, innerWidth * .75, innerHeight * .35), 350);
+    setTimeout(() => burst(180, innerWidth * .5, innerHeight * .25), 800);
+
+    countUp($('age'), AGE, 1600);
+    const days = Math.round(AGE * 365.25);
+    countUp($('days'), days, 2200, true);
+    countUp($('hearts'), Math.round(days * 24 * 60 * 75), 2600, true);
+
+    launchBalloons();
+  }
+
+  function countUp(el, target, ms, sep) {
+    const start = performance.now();
+    (function step(now) {
+      const p = Math.min(1, (now - start) / ms);
+      const v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      el.textContent = sep ? v.toLocaleString('it-IT') : v;
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  const balloonColors = ['#ff6fae', '#ffd166', '#06d6a0', '#4cc9f0', '#b5179e', '#f72585', '#ff9a8b'];
+  function launchBalloons() {
+    let n = 0;
+    const iv = setInterval(() => {
+      makeBalloon();
+      if (++n >= 18) clearInterval(iv);
+    }, 450);
+  }
+  function makeBalloon() {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    const c = balloonColors[(Math.random() * balloonColors.length) | 0];
+    b.style.background = c;
+    b.style.left = (Math.random() * 90) + 'vw';
+    b.style.setProperty('--drift', ((Math.random() - .5) * 160) + 'px');
+    b.style.animationDuration = (8 + Math.random() * 6) + 's';
+    b.addEventListener('click', (e) => {
+      chime();
+      burst(40, e.clientX, e.clientY);
+      b.remove();
+    });
+    b.addEventListener('animationend', () => b.remove());
+    document.body.appendChild(b);
+  }
+
+  $('againBtn').addEventListener('click', () => {
+    burst(200, innerWidth / 2, innerHeight / 2);
+    launchBalloons();
+  });
+})();
+</script>
+</body>
+</html>
