@@ -3,43 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Buon compleanno Elisa!</title>
+<title>Buon compleanno Elisa! 🎂</title>
 <meta name="description" content="Tanti auguri Elisa per i tuoi 24 anni!">
 <meta property="og:title" content="🎂 Buon compleanno Elisa!">
-<meta property="og:description" content="Una sorpresa per i tuoi 24 anni. Aprila!">
+<meta property="og:description" content="Una sorpresa speciale per i tuoi 24 anni. Aprila!">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Pacifico&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
 <style>
   :root {
-    --bg1: #2b1055;
-    --bg2: #7597de;
-    --pink: #ff6fae;
-    --pink-dark: #e04a8e;
-    --cream: #fff4e6;
-    --gold: #ffd166;
-    --text: #fff;
+    --bg-gradient: linear-gradient(135deg, #12072b 0%, #2a085c 40%, #5b1380 75%, #a82a78 100%);
+    --pink: #ff3385;
+    --pink-glow: #ff66b2;
+    --gold: #ffcc00;
+    --gold-glow: #ffe680;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    --text-color: #ffffff;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
+
   body {
-    font-family: 'Quicksand', system-ui, sans-serif;
-    color: var(--text);
-    background: linear-gradient(160deg, var(--bg1) 0%, #6a3093 50%, var(--bg2) 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: var(--text-color);
+    background: var(--bg-gradient);
     background-attachment: fixed;
     overflow-x: hidden;
     min-height: 100vh;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Stelline di sfondo */
+  /* ---------- SFONDO PARALLASSE & STELLE ---------- */
   .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
   .star {
-    position: absolute; width: 3px; height: 3px; border-radius: 50%;
-    background: #fff; opacity: .7; animation: twinkle 3s infinite ease-in-out;
+    position: absolute; border-radius: 50%; background: #fff;
+    opacity: 0.8; animation: twinkle var(--duration, 3s) infinite ease-in-out;
   }
-  @keyframes twinkle { 0%,100% { opacity: .2; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.4); filter: drop-shadow(0 0 6px #fff); }
+  }
 
   #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
 
@@ -47,209 +55,290 @@
     position: relative; z-index: 2;
     min-height: 100vh; width: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 24px 16px; text-align: center;
+    padding: 32px 20px; text-align: center;
   }
   .hidden { display: none !important; }
-  .fade-in { animation: fadeIn 1s ease both; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  
+  .fade-in { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
-  h1, .script { font-family: 'Pacifico', cursive; font-weight: 400; }
+  /* Titoli stilizzati */
+  .script-font { font-family: 'Pacifico', cursive; font-weight: 400; }
+  
+  /* ---------- SCHERMATA 1: REGALO ---------- */
+  .gift-title {
+    font-size: clamp(2.2rem, 7vw, 3.8rem);
+    background: linear-gradient(135deg, #fff 30%, var(--gold-glow));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 12px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  .gift-sub {
+    font-size: 1.15rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 40px; font-weight: 500;
+  }
 
-  /* ---------- SCHERMATA 1: regalo ---------- */
-  .gift-title { font-size: clamp(1.6rem, 6vw, 2.6rem); margin-bottom: 8px; }
-  .gift-sub { opacity: .85; margin-bottom: 40px; font-size: 1.05rem; }
+  .peek-badge {
+    display: inline-flex; gap: 12px; padding: 10px 22px;
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px); border-radius: 999px; margin-bottom: 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .peek-badge span { font-size: 1.6rem; animation: float 3s infinite ease-in-out; }
+  .peek-badge span:nth-child(2) { animation-delay: 0.3s; }
+  .peek-badge span:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  /* Regalo 3D */
+  .gift-wrapper { perspective: 1000px; margin: 20px 0; }
   .gift {
-    position: relative; width: 170px; height: 150px; cursor: pointer;
-    animation: wiggle 2.2s infinite ease-in-out; border: 0; background: none;
+    position: relative; width: 180px; height: 180px; cursor: pointer;
+    background: none; border: none; transform-style: preserve-3d;
+    animation: pulseGlow 2s infinite alternate;
   }
-  .gift:focus-visible { outline: 3px dashed var(--gold); outline-offset: 10px; border-radius: 12px; }
-  @keyframes wiggle {
-    0%, 70%, 100% { transform: rotate(0); }
-    75% { transform: rotate(-6deg); } 80% { transform: rotate(6deg); }
-    85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); }
+  @keyframes pulseGlow {
+    from { transform: scale(1); filter: drop-shadow(0 10px 20px rgba(255,51,133,0.3)); }
+    to { transform: scale(1.04); filter: drop-shadow(0 15px 35px rgba(255,51,133,0.6)); }
   }
+  
   .gift .box {
-    position: absolute; bottom: 0; left: 10px; width: 150px; height: 100px;
-    background: var(--pink); border-radius: 6px;
-    box-shadow: inset -12px 0 0 rgba(0,0,0,.08), 0 14px 30px rgba(0,0,0,.3);
+    position: absolute; bottom: 0; left: 15px; width: 150px; height: 120px;
+    background: linear-gradient(135deg, #ff3385, #d61b69);
+    border-radius: 12px; box-shadow: inset -10px 0 20px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.4);
   }
   .gift .lid {
-    position: absolute; top: 22px; left: 0; width: 170px; height: 34px;
-    background: var(--pink-dark); border-radius: 6px; transition: transform .6s cubic-bezier(.5,-0.5,.5,1.5);
+    position: absolute; top: 32px; left: 5px; width: 170px; height: 38px;
+    background: linear-gradient(135deg, #ff529a, #e02475);
+    border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
   }
-  .gift .ribbon-v { position: absolute; left: 50%; transform: translateX(-50%); width: 24px; height: 100%; background: var(--gold); }
-  .gift .bow { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); width: 70px; height: 30px; }
+  .gift .ribbon-v {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 28px; height: 100%; background: linear-gradient(to right, #ffd700, #ffa500);
+    box-shadow: 0 0 8px rgba(255,215,0,0.5);
+  }
+  .gift .bow {
+    position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 32px;
+  }
   .gift .bow::before, .gift .bow::after {
-    content: ""; position: absolute; top: 0; width: 34px; height: 28px;
-    border: 7px solid var(--gold); border-radius: 50% 50% 0 50%;
+    content: ""; position: absolute; top: 0; width: 36px; height: 30px;
+    border: 6px solid #ffd700; border-radius: 50% 50% 0 50%;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
   }
-  .gift .bow::before { left: 0; transform: rotate(-20deg); }
-  .gift .bow::after { right: 0; transform: rotate(20deg) scaleX(-1); }
-  .gift.open .lid { transform: translateY(-120px) rotate(-25deg); }
+  .gift .bow::before { left: 0; transform: rotate(-25deg); }
+  .gift .bow::after { right: 0; transform: rotate(25deg) scaleX(-1); }
+
+  .gift.open .lid { transform: translateY(-140px) rotateX(45deg) rotateZ(-15deg); opacity: 0.9; }
   .gift.open { animation: none; }
 
-  /* ---------- SCHERMATA 2: torta ---------- */
-  .wish { font-size: clamp(1.5rem, 6vw, 2.4rem); margin-bottom: 6px; }
-  .hint { opacity: .85; margin-bottom: 26px; min-height: 1.4em; }
-
-  .cake-wrap { position: relative; width: 280px; max-width: 90vw; height: 330px; }
-  .plate {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 300px; max-width: 96vw; height: 26px; border-radius: 50%;
-    background: radial-gradient(ellipse at center, #fff 0%, #dcdcf0 70%);
-    box-shadow: 0 10px 25px rgba(0,0,0,.35);
-  }
-  .layer {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    border-radius: 14px 14px 10px 10px;
-  }
-  .layer.bottom { bottom: 12px; width: 250px; height: 90px; background: #8d5a3b; }
-  .layer.top    { bottom: 96px; width: 200px; height: 78px; background: #a8704b; }
-  .frosting {
-    position: absolute; top: -6px; left: -4px; right: -4px; height: 30px;
-    background: var(--cream); border-radius: 14px;
-  }
-  .frosting::after {
-    /* gocce di glassa */
-    content: ""; position: absolute; top: 18px; left: 6px; right: 6px; height: 22px;
-    background:
-      radial-gradient(circle at 10px 0, var(--cream) 10px, transparent 11px) 0 0 / 36px 22px repeat-x;
-  }
-  .sprinkles { position: absolute; inset: 34px 10px 10px; }
-  .sprinkle { position: absolute; width: 10px; height: 4px; border-radius: 3px; }
-
-  .candles {
-    position: absolute; bottom: 168px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 10px; align-items: flex-end;
-  }
-  .candle { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-  .candle .num {
-    font-family: 'Pacifico', cursive; font-size: 96px; line-height: 1;
-    background: repeating-linear-gradient(135deg, var(--pink) 0 12px, #fff 12px 22px);
+  /* ---------- SCHERMATA 2: TORTA DECORATA ---------- */
+  .wish {
+    font-size: clamp(2rem, 6vw, 3rem);
+    background: linear-gradient(135deg, #fff, var(--gold-glow));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    -webkit-text-stroke: 2px rgba(255,255,255,.6);
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,.3));
-    margin-top: -6px;
   }
-  .wick { width: 3px; height: 14px; background: #333; border-radius: 2px; }
+  .hint { opacity: 0.85; margin-top: 8px; margin-bottom: 30px; font-size: 1.1rem; }
+
+  /* Torta CSS Avanzata */
+  .cake-container {
+    position: relative; width: 300px; height: 320px;
+    display: flex; justify-content: center; align-items: flex-end;
+    margin: 10px 0 30px;
+  }
+  .plate {
+    position: absolute; bottom: 0; width: 320px; height: 18px;
+    background: linear-gradient(90deg, #e0e0e0, #ffffff, #d5d5d5);
+    border-radius: 50%; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  }
+  .cake-layer {
+    position: absolute; border-radius: 16px 16px 12px 12px;
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2), 0 8px 15px rgba(0,0,0,0.15);
+  }
+  .cake-layer.bottom {
+    bottom: 14px; width: 260px; height: 100px;
+    background: linear-gradient(135deg, #5c2c16, #8d4925);
+  }
+  .cake-layer.top {
+    bottom: 104px; width: 200px; height: 85px;
+    background: linear-gradient(135deg, #73391d, #a6582e);
+  }
+  
+  /* Glassa e decorazioni */
+  .drips {
+    position: absolute; top: 0; left: -2px; right: -2px; height: 32px;
+    background: #fff5ea; border-radius: 16px 16px 8px 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .drips::after {
+    content: ""; position: absolute; top: 20px; left: 0; right: 0; height: 20px;
+    background: radial-gradient(circle at 12px 0, #fff5ea 12px, transparent 13px) 0 0 / 28px 20px repeat-x;
+  }
+
+  /* Targhetta di Cioccolato sulla Torta */
+  .choco-badge {
+    position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #3d1e10, #26130a);
+    border: 2px solid var(--gold); border-radius: 12px; padding: 4px 16px;
+    color: var(--gold); font-family: 'Pacifico', cursive; font-size: 0.95rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); z-index: 5; white-space: nowrap;
+  }
+
+  /* Candeline */
+  .candles-group {
+    position: absolute; bottom: 185px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 18px; align-items: flex-end; z-index: 10;
+  }
+  .candle { position: relative; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+  .candle .number-candle {
+    font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 82px; line-height: 0.9;
+    background: repeating-linear-gradient(45deg, #ff3385, #ff3385 12px, #ffffff 12px, #ffffff 24px);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4));
+  }
+  .wick { width: 4px; height: 16px; background: #222; border-radius: 2px; margin-bottom: -4px; }
+  
   .flame {
-    position: absolute; top: -40px; left: 50%; width: 22px; height: 36px;
+    position: absolute; top: -38px; left: 50%; width: 22px; height: 38px;
     transform: translateX(-50%);
-    background: radial-gradient(ellipse at 50% 70%, #fff 0%, #ffe066 35%, #ff9f1c 65%, rgba(255,80,0,0) 75%);
+    background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffea75 35%, #ff6800 75%, transparent 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: flicker .15s infinite alternate;
-    transform-origin: 50% 100%;
-    box-shadow: 0 0 30px 10px rgba(255,200,80,.45);
+    animation: flameBurn 0.15s infinite alternate ease-in-out;
+    transform-origin: center bottom;
+    filter: drop-shadow(0 0 18px #ff9900);
   }
-  @keyframes flicker {
-    from { transform: translateX(-50%) scale(1, 1) rotate(-2deg); }
-    to   { transform: translateX(-50%) scale(.92, 1.08) rotate(2deg); }
+  @keyframes flameBurn {
+    0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+    100% { transform: translateX(-50%) scale(0.92, 1.08) rotate(2deg); }
   }
-  .candle.out .flame { animation: blowOut .5s forwards; }
-  @keyframes blowOut { to { opacity: 0; transform: translateX(-50%) scale(.2, .1) translateY(10px); } }
+
+  .candle.out .flame { animation: extinguish 0.6s forwards ease-out; }
+  @keyframes extinguish { to { opacity: 0; transform: translateX(-50%) scale(0); } }
+
   .smoke {
-    position: absolute; top: -30px; left: 50%; width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(220,220,220,.6); opacity: 0; pointer-events: none;
+    position: absolute; top: -30px; left: 50%; width: 12px; height: 12px;
+    border-radius: 50%; background: rgba(200,200,200,0.7); opacity: 0; pointer-events: none;
   }
-  .candle.out .smoke { animation: smoke 2s ease-out forwards; }
-  @keyframes smoke {
-    0% { opacity: .7; transform: translate(-50%, 0) scale(1); }
-    100% { opacity: 0; transform: translate(-30%, -80px) scale(4); }
+  .candle.out .smoke { animation: smokeRise 2s ease-out forwards; }
+  @keyframes smokeRise {
+    0% { opacity: 0.8; transform: translate(-50%, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-80%, -90px) scale(4); filter: blur(4px); }
   }
 
+  /* ---------- BOTTONI MODERNIZZATI ---------- */
+  .btn-group { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px; margin-top: 10px; }
+  
   .btn {
-    margin-top: 28px; border: 0; cursor: pointer;
-    font: 700 1.05rem 'Quicksand', sans-serif; color: #fff;
-    padding: 14px 28px; border-radius: 999px;
-    background: linear-gradient(135deg, var(--pink), #ff9a8b);
-    box-shadow: 0 8px 22px rgba(255,111,174,.45);
-    transition: transform .15s;
+    border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; font-size: 1.05rem; color: #fff; padding: 16px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff3385 0%, #ff66b2 100%);
+    box-shadow: 0 10px 28px rgba(255, 51, 133, 0.45);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   }
-  .btn:hover { transform: translateY(-2px); }
-  .btn:active { transform: scale(.97); }
-  .btn.ghost { background: rgba(255,255,255,.15); box-shadow: none; font-weight: 600; font-size: .95rem; padding: 10px 20px; margin-top: 12px; }
+  .btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(255, 51, 133, 0.6); }
+  .btn:active { transform: translateY(0) scale(0.98); }
+  
+  .btn.ghost {
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px); box-shadow: none; font-size: 0.95rem; padding: 12px 24px;
+  }
+  .btn.ghost:hover { background: rgba(255, 255, 255, 0.18); }
 
-  .mic-meter { width: 180px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.2); margin: 14px auto 0; overflow: hidden; }
-  .mic-meter > div { height: 100%; width: 0; background: var(--gold); transition: width .08s; }
+  .mic-meter {
+    width: 200px; height: 10px; border-radius: 6px; background: rgba(255,255,255,0.15);
+    margin: 16px auto 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .mic-meter > div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), #ff5500); transition: width 0.08s ease; }
 
-  /* ---------- SCHERMATA 3: auguri ---------- */
+  /* ---------- SCHERMATA 3: SCHEDA AUGURI & CARD ---------- */
   .big-title {
-    font-size: clamp(2.4rem, 11vw, 5rem); line-height: 1.15;
-    text-shadow: 0 4px 0 var(--pink-dark), 0 10px 30px rgba(0,0,0,.35);
+    font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1;
+    font-family: 'Outfit', sans-serif; font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 20%, var(--gold-glow) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 6px 20px rgba(0,0,0,0.4));
   }
-  .big-title span { display: inline-block; animation: bounce 1.6s infinite ease-in-out; }
-  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .big-title span { display: inline-block; animation: wave 2s infinite ease-in-out; }
+  @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
-  .age {
-    margin: 18px auto 6px; width: 140px; height: 140px; border-radius: 50%;
+  .badge-container { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+  .badge {
+    padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 0.9rem;
+    background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  .age-counter {
+    margin: 24px auto 10px; width: 130px; height: 130px; border-radius: 50%;
     display: grid; place-items: center;
-    background: radial-gradient(circle at 30% 30%, #ffe8a3, var(--gold) 60%, #f4a261);
-    color: #6a3093; font: 700 4rem 'Quicksand', sans-serif;
-    box-shadow: 0 0 0 8px rgba(255,255,255,.18), 0 15px 40px rgba(0,0,0,.35);
-    animation: pop .8s cubic-bezier(.2,1.6,.4,1) both .3s;
+    background: linear-gradient(135deg, #ffe8a3 0%, #ffd166 50%, #f4a261 100%);
+    color: #4a1259; font-weight: 800; font-size: 3.8rem; font-family: 'Outfit', sans-serif;
+    box-shadow: 0 0 0 8px rgba(255,255,255,0.15), 0 20px 40px rgba(0,0,0,0.4);
   }
-  @keyframes pop { from { transform: scale(0) rotate(-90deg); } to { transform: none; } }
-  .age-label { opacity: .9; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .85rem; }
 
-  .card {
-    margin-top: 30px; max-width: 520px; width: 100%;
-    background: rgba(255,255,255,.12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 22px; padding: 26px 22px; line-height: 1.65; font-size: 1.07rem;
-    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  .glass-card {
+    margin-top: 28px; max-width: 560px; width: 100%;
+    background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 28px;
+    padding: 32px 28px; line-height: 1.7; font-size: 1.1rem; text-align: left;
+    box-shadow: var(--glass-shadow);
   }
-  .card p + p { margin-top: 12px; }
-  .card .sign { font-family: 'Pacifico', cursive; font-size: 1.4rem; margin-top: 18px; color: var(--gold); }
+  .glass-card p + p { margin-top: 16px; }
+  .glass-card .sign {
+    font-family: 'Pacifico', cursive; font-size: 1.6rem; text-align: right;
+    margin-top: 24px; color: var(--gold);
+  }
 
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 22px; width: 100%; max-width: 520px; }
-  .fact { background: rgba(255,255,255,.1); border-radius: 16px; padding: 14px 10px; }
-  .fact b { display: block; font-size: 1.5rem; color: var(--gold); }
-  .fact small { opacity: .85; }
+  /* Grid Statistiche */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px; margin-top: 24px; width: 100%; max-width: 560px;
+  }
+  .stat-card {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px; padding: 18px 12px; backdrop-filter: blur(10px); text-align: center;
+  }
+  .stat-card b { display: block; font-size: 1.6rem; color: var(--gold); font-family: 'Outfit', sans-serif; }
+  .stat-card small { opacity: 0.85; font-size: 0.85rem; font-weight: 500; }
 
+  /* Elementi Volanti */
+  .balloon, .floater {
+    position: fixed; bottom: -160px; z-index: 1; pointer-events: auto; cursor: pointer;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  }
   .balloon {
-    position: fixed; bottom: -160px; z-index: 1; width: 60px; height: 76px; border-radius: 50% 50% 48% 48%;
-    animation: rise linear forwards; pointer-events: auto; cursor: pointer;
-    box-shadow: inset -8px -10px 0 rgba(0,0,0,.12);
+    width: 60px; height: 75px; border-radius: 50% 50% 48% 48%;
+    animation: floatUp linear forwards;
   }
-  .balloon::before { /* riflesso */
-    content: ""; position: absolute; top: 14px; left: 14px; width: 12px; height: 18px; border-radius: 50%; background: rgba(255,255,255,.45);
+  .balloon::after {
+    content: ""; position: absolute; top: 100%; left: 50%; width: 2px; height: 90px;
+    background: rgba(255,255,255,0.4);
   }
-  .balloon::after { /* filo */
-    content: ""; position: absolute; top: 100%; left: 50%; width: 1px; height: 80px; background: rgba(255,255,255,.6);
-  }
-  @keyframes rise { to { transform: translateY(calc(-100vh - 260px)) translateX(var(--drift, 0)); } }
+  .floater { font-size: 52px; animation: floatUp linear forwards; user-select: none; }
+  @keyframes floatUp { to { transform: translateY(calc(-100vh - 260px)) translateX(var(--drift, 0)); } }
 
-  /* Giaguari e dottoresse */
-  .floater {
-    position: fixed; bottom: -120px; z-index: 1; font-size: 56px; line-height: 1;
-    animation: rise linear forwards; cursor: pointer; user-select: none;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,.3));
-  }
   .runner {
-    position: fixed; bottom: 18px; left: 100vw; z-index: 3; font-size: 70px; line-height: 1;
-    pointer-events: none; animation: run 5s linear forwards;
-    filter: drop-shadow(0 8px 8px rgba(0,0,0,.35));
+    position: fixed; bottom: 20px; left: 100vw; z-index: 3; font-size: 65px;
+    pointer-events: none; animation: runAcross 6s linear forwards;
+    filter: drop-shadow(0 10px 12px rgba(0,0,0,0.4));
   }
-  .runner span { display: inline-block; animation: gallop .3s infinite alternate ease-in-out; }
-  @keyframes run { to { transform: translateX(calc(-100vw - 260px)); } }
-  @keyframes gallop { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-14px) rotate(4deg); } }
-  .peek { font-size: 2.6rem; margin-bottom: 18px; letter-spacing: 8px; }
-  .peek span { display: inline-block; animation: bounce 1.4s infinite ease-in-out; }
-  .peek span:nth-child(2) { animation-delay: .2s; }
-  .peek span:nth-child(3) { animation-delay: .4s; }
-  .doc-badge {
-    display: inline-block; margin-top: 10px; padding: 6px 16px; border-radius: 999px;
-    background: rgba(255,255,255,.16); font-weight: 700; letter-spacing: .03em;
-  }
+  @keyframes runAcross { to { transform: translateX(calc(-100vw - 300px)); } }
 
   .music-toggle {
-    position: fixed; top: 14px; right: 14px; z-index: 60;
-    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
-    background: rgba(255,255,255,.18); color: #fff; font-size: 1.2rem;
+    position: fixed; top: 20px; right: 20px; z-index: 60;
+    width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px); color: #fff; font-size: 1.3rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition: transform 0.2s;
   }
+  .music-toggle:hover { transform: scale(1.1); }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
   }
 </style>
 </head>
@@ -257,68 +346,88 @@
 
 <div class="stars" id="stars"></div>
 <canvas id="confetti"></canvas>
-<button class="music-toggle hidden" id="musicToggle" aria-label="Musica on/off">🎵</button>
+<button class="music-toggle hidden" id="musicToggle" aria-label="Attiva/Disattiva musica">🎵</button>
 
-<!-- 1. Regalo -->
+<!-- 1. SCHERMATA REGALO -->
 <section class="screen" id="screenGift">
-  <h1 class="gift-title fade-in">Ehi Elisa! 💌</h1>
-  <p class="gift-sub fade-in">C'è una sorpresa per te... tocca il regalo!</p>
-  <div class="peek fade-in" aria-hidden="true"><span>🐆</span><span>👩‍⚕️</span><span>🐆</span></div>
-  <button class="gift" id="gift" aria-label="Apri il regalo">
-    <div class="box"><div class="ribbon-v"></div></div>
-    <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
-  </button>
+  <div class="peek-badge fade-in">
+    <span>🐆</span><span>👩‍⚕️</span><span>✨</span>
+  </div>
+  <h1 class="gift-title script-font fade-in">Ehi Elisa! 💌</h1>
+  <p class="gift-sub fade-in">C'è una sorpresa speciale per te... Tocca il regalo per aprirlo!</p>
+  
+  <div class="gift-wrapper fade-in">
+    <button class="gift" id="gift" aria-label="Apri il regalo di compleanno">
+      <div class="box"><div class="ribbon-v"></div></div>
+      <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
+    </button>
+  </div>
 </section>
 
-<!-- 2. Torta -->
+<!-- 2. SCHERMATA TORTA -->
 <section class="screen hidden" id="screenCake">
-  <h1 class="wish fade-in">Esprimi un desiderio ✨</h1>
-  <p class="hint" id="hint">...e poi soffia sulle candeline!</p>
+  <h1 class="wish fade-in script-font">Esprimi un desiderio ✨</h1>
+  <p class="hint" id="hint">Soffia sulle candeline o toccale per spegnerle!</p>
 
-  <div class="cake-wrap fade-in">
-    <div class="candles">
-      <div class="candle" data-candle><div class="flame"></div><div class="smoke"></div><div class="wick"></div><div class="num">2</div></div>
-      <div class="candle" data-candle><div class="flame"></div><div class="smoke"></div><div class="wick"></div><div class="num">4</div></div>
+  <div class="cake-container fade-in">
+    <div class="candles-group">
+      <div class="candle" data-candle>
+        <div class="flame"></div><div class="smoke"></div><div class="wick"></div>
+        <div class="number-candle">2</div>
+      </div>
+      <div class="candle" data-candle>
+        <div class="flame"></div><div class="smoke"></div><div class="wick"></div>
+        <div class="number-candle">4</div>
+      </div>
     </div>
-    <div class="layer top"><div class="frosting"></div><div class="sprinkles"></div></div>
-    <div class="layer bottom"><div class="frosting"></div><div class="sprinkles"></div></div>
+    
+    <div class="cake-layer top">
+      <div class="drips"></div>
+    </div>
+    <div class="cake-layer bottom">
+      <div class="drips"></div>
+      <div class="choco-badge">24 Elisa</div>
+    </div>
     <div class="plate"></div>
   </div>
 
-  <button class="btn" id="micBtn">🎤 Soffia nel microfono</button>
-  <div class="mic-meter hidden" id="micMeter"><div></div></div>
-  <button class="btn ghost" id="tapBtn">oppure tocca le candeline 👆</button>
+  <div class="btn-group fade-in">
+    <button class="btn" id="micBtn">🎤 Soffia nel microfono</button>
+    <div class="mic-meter hidden" id="micMeter"><div></div></div>
+    <button class="btn ghost" id="tapBtn">Oppure tocca le candeline 👆</button>
+  </div>
 </section>
 
-<!-- 3. Auguri -->
+<!-- 3. SCHERMATA AUGURI FINALE -->
 <section class="screen hidden" id="screenWish">
-  <h1 class="big-title" id="bigTitle">Tanti auguri Elisa!</h1>
-  <div class="age" id="age">0</div>
-  <div class="age-label">anni di pura meraviglia</div>
-  <div class="doc-badge">👩‍⚕️ Dott.ssa Elisa · grinta da giaguaro 🐆</div>
+  <h1 class="big-title" id="bigTitle">Tanti Auguri Elisa!</h1>
+  
+  <div class="badge-container fade-in">
+    <div class="badge">👩‍⚕️ Dott.ssa Elisa</div>
+    <div class="badge">🐆 Grinta da Giaguaro</div>
+  </div>
 
-  <div class="card fade-in">
+  <div class="age-counter" id="age">0</div>
+  <div style="opacity: 0.85; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;">Anni di pura meraviglia</div>
+
+  <div class="glass-card fade-in">
     <p>Cara Elisa,</p>
-    <p>oggi il mondo festeggia una persona speciale: <strong>tu</strong>! 🎉
-      Che questi 24 anni ti portino risate a crepapelle, avventure da ricordare,
-      sogni che diventano realtà e tanta, tantissima gente che ti vuole bene
-      (come me, ovviamente 😄).</p>
-    <p>Continua a essere esattamente come sei: unica.
-      Goditi ogni momento di questa giornata, te lo meriti tutto!</p>
-    <p>Che tu possa affrontare tutto con la grinta di un giaguaro 🐆
-      e prenderti cura del mondo come solo una grande dottoressa sa fare 👩‍⚕️.</p>
-    <p class="sign">Buon compleanno! 🥳</p>
+    <p>Oggi si festeggia una persona davvero unica: <strong>tu</strong>! 🎉</p>
+    <p>Che questi 24 anni ti portino sorrisi contagiosi, avventure indimenticabili, sogni realizzati e tante persone speciali pronte a sostenerti sempre.</p>
+    <p>Continua ad affrontare ogni sfida con la determinazione e la <strong>grinta di un giaguaro 🐆</strong> e a prenderti cura degli altri con il cuore e la passione di una vera <strong>dottoressa 👩‍⚕️</strong>.</p>
+    <p class="sign">Buon Compleanno! 🥳</p>
   </div>
 
-  <div class="facts">
-    <div class="fact"><b id="days">0</b><small>giorni vissuti</small></div>
-    <div class="fact"><b id="hearts">0</b><small>battiti del cuore (circa!)</small></div>
-    <div class="fact"><b>∞</b><small>motivi per festeggiarti</small></div>
-    <div class="fact"><b>🐆</b><small>livello di grinta: giaguaro</small></div>
-    <div class="fact"><b>👩‍⚕️</b><small>diagnosi: troppo speciale</small></div>
+  <div class="stats-grid fade-in">
+    <div class="stat-card"><b id="days">0</b><small>Giorni di ricordi</small></div>
+    <div class="stat-card"><b id="hearts">0</b><small>Battiti di cuore</small></div>
+    <div class="stat-card"><b>∞</b><small>Momenti felici in arrivo</small></div>
+    <div class="stat-card"><b>100%</b><small>Speciale & Unica</small></div>
   </div>
 
-  <button class="btn" id="againBtn">🎈 Ancora coriandoli!</button>
+  <div style="margin-top: 30px;">
+    <button class="btn" id="againBtn">🎈 Esplosione di Coriandoli!</button>
+  </div>
 </section>
 
 <script>
@@ -327,84 +436,80 @@
   const $ = (id) => document.getElementById(id);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Stelle ---------- */
-  const stars = $('stars');
-  for (let i = 0; i < 70; i++) {
+  /* ---------- STELLE DINAMICHE ---------- */
+  const starsContainer = $('stars');
+  for (let i = 0; i < 90; i++) {
     const s = document.createElement('div');
     s.className = 'star';
     s.style.left = Math.random() * 100 + '%';
     s.style.top = Math.random() * 100 + '%';
-    s.style.animationDelay = (Math.random() * 3) + 's';
-    const size = Math.random() * 2 + 1;
+    s.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+    const size = Math.random() * 2.5 + 1;
     s.style.width = s.style.height = size + 'px';
-    stars.appendChild(s);
+    starsContainer.appendChild(s);
   }
 
-  /* ---------- Codette sulla torta ---------- */
-  const sprinkleColors = ['#ff6fae', '#ffd166', '#06d6a0', '#118ab2', '#ef476f', '#fff'];
-  document.querySelectorAll('.sprinkles').forEach(box => {
-    for (let i = 0; i < 22; i++) {
-      const sp = document.createElement('div');
-      sp.className = 'sprinkle';
-      sp.style.left = Math.random() * 92 + '%';
-      sp.style.top = Math.random() * 80 + '%';
-      sp.style.background = sprinkleColors[i % sprinkleColors.length];
-      sp.style.transform = `rotate(${Math.random() * 180}deg)`;
-      box.appendChild(sp);
-    }
-  });
-
-  /* ---------- Coriandoli ---------- */
+  /* ---------- MOTORE CORIANDOLI (CANVAS) ---------- */
   const canvas = $('confetti');
   const ctx = canvas.getContext('2d');
   let pieces = [];
   let rafId = null;
-  function resize() { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; }
+
+  function resize() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+  }
   addEventListener('resize', resize); resize();
 
-  function burst(count = 180, x = innerWidth / 2, y = innerHeight / 3) {
-    if (reduceMotion) count = 40;
-    const colors = ['#ff6fae', '#ffd166', '#06d6a0', '#4cc9f0', '#f72585', '#ffffff', '#b5179e'];
+  function burst(count = 180, x = window.innerWidth / 2, y = window.innerHeight / 3) {
+    if (reduceMotion) count = 30;
+    const colors = ['#ff3385', '#ffd166', '#06d6a0', '#4cc9f0', '#ff9a8b', '#ffffff'];
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 9 + 4;
+      const speed = Math.random() * 12 + 4;
       pieces.push({
         x, y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed - 6,
-        w: Math.random() * 8 + 5, h: Math.random() * 5 + 3,
-        rot: Math.random() * 360, vr: (Math.random() - .5) * 14,
+        w: Math.random() * 9 + 5, h: Math.random() * 6 + 4,
+        rot: Math.random() * 360, vr: (Math.random() - 0.5) * 12,
         color: colors[(Math.random() * colors.length) | 0],
-        life: 0, max: 160 + Math.random() * 80,
-        circle: Math.random() < .25,
-        emoji: Math.random() < .12 ? (Math.random() < .5 ? '🐆' : '👩‍⚕️') : null
+        life: 0, max: 150 + Math.random() * 80,
+        emoji: Math.random() < 0.15 ? (Math.random() < 0.5 ? '🐆' : '👩‍⚕️') : null
       });
     }
     if (!rafId) loop();
   }
+
   function loop() {
     const dpr = devicePixelRatio;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.scale(dpr, dpr);
-    pieces = pieces.filter(p => p.life < p.max && p.y < innerHeight + 40);
+
+    pieces = pieces.filter(p => p.life < p.max && p.y < window.innerHeight + 50);
     for (const p of pieces) {
       p.life++;
-      p.vy += 0.22; p.vx *= 0.985; p.vy *= 0.985;
-      p.x += p.vx + Math.sin(p.life / 10); p.y += p.vy; p.rot += p.vr;
+      p.vy += 0.22; p.vx *= 0.98; p.vy *= 0.98;
+      p.x += p.vx + Math.sin(p.life / 8); p.y += p.vy; p.rot += p.vr;
+
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - p.life / p.max);
       ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
-      ctx.fillStyle = p.color;
-      if (p.emoji) { ctx.font = '26px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(p.emoji, 0, 0); }
-      else if (p.circle) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2); ctx.fill(); }
-      else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      
+      if (p.emoji) {
+        ctx.font = '24px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(p.emoji, 0, 0);
+      } else {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
       ctx.restore();
     }
-    rafId = pieces.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, canvas.width, canvas.height), null);
+    rafId = pieces.length ? requestAnimationFrame(loop) : null;
   }
 
-  /* ---------- Musica: "Tanti auguri a te" (WebAudio) ---------- */
+  /* ---------- AUDIO WEBAUDIO SYNT ---------- */
   let audioCtx = null;
   let musicOn = true;
   let musicTimer = null;
@@ -415,71 +520,80 @@
     ['G4',.75],['G4',.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',2],
     ['F5',.75],['F5',.25],['E5',1],['C5',1],['D5',1],['C5',3]
   ];
+
   function ensureAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
   }
-  function tone(freq, start, dur, vol = .18) {
+
+  function tone(freq, start, dur, vol = 0.15) {
     const o = audioCtx.createOscillator(), g = audioCtx.createGain();
     o.type = 'triangle'; o.frequency.value = freq;
     g.gain.setValueAtTime(0, start);
-    g.gain.linearRampToValueAtTime(vol, start + .03);
-    g.gain.exponentialRampToValueAtTime(.001, start + dur * .95);
+    g.gain.linearRampToValueAtTime(vol, start + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.001, start + dur * 0.95);
     o.connect(g).connect(audioCtx.destination);
     o.start(start); o.stop(start + dur);
   }
+
   function playSong() {
     if (!musicOn) return;
     ensureAudio();
-    const beat = .42;
-    let t = audioCtx.currentTime + .1;
+    const beat = 0.42;
+    let t = audioCtx.currentTime + 0.1;
     for (const [n, d] of song) { tone(N[n], t, d * beat); t += d * beat; }
     clearTimeout(musicTimer);
     musicTimer = setTimeout(playSong, (t - audioCtx.currentTime + 2) * 1000);
   }
+
   function chime() {
     ensureAudio();
     const t = audioCtx.currentTime;
-    [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone(f, t + i * .08, .5, .12));
+    [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone(f, t + i * 0.08, 0.4, 0.1));
   }
+
   $('musicToggle').addEventListener('click', () => {
     musicOn = !musicOn;
     $('musicToggle').textContent = musicOn ? '🎵' : '🔇';
-    if (musicOn) playSong(); else { clearTimeout(musicTimer); if (audioCtx) audioCtx.suspend(); }
-    if (musicOn && audioCtx) audioCtx.resume();
+    if (musicOn) playSong();
+    else { clearTimeout(musicTimer); if (audioCtx) audioCtx.suspend(); }
   });
 
-  /* ---------- Flusso ---------- */
+  /* ---------- NAVEGAZIONE SCHERMATE ---------- */
   function show(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     $(id).classList.remove('hidden');
-    scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }
 
-  // 1 → 2: apri il regalo
+  // Regalo -> Torta
   $('gift').addEventListener('click', () => {
     ensureAudio();
     chime();
     $('gift').classList.add('open');
     const r = $('gift').getBoundingClientRect();
-    burst(120, r.left + r.width / 2, r.top + 20);
-    setTimeout(() => show('screenCake'), 1100);
+    burst(140, r.left + r.width / 2, r.top + 20);
+    setTimeout(() => show('screenCake'), 1000);
   }, { once: true });
 
-  // 2: candeline
+  // Candeline
   const candles = [...document.querySelectorAll('[data-candle]')];
   let blown = false;
+
   function blowCandle(c) {
     if (c.classList.contains('out')) return;
     c.classList.add('out');
+    chime();
     if (candles.every(x => x.classList.contains('out'))) finish();
   }
+
   candles.forEach(c => c.addEventListener('click', () => blowCandle(c)));
+  
   $('tapBtn').addEventListener('click', () => {
-    $('hint').textContent = 'Tocca ogni candelina per spegnerla 🕯️';
+    $('hint').textContent = 'Tocca ogni candelina per spegnerla! 🕯️';
   });
 
-  // Microfono: soffiare spegne le candeline
+  // Microfono
   let micStream = null;
   $('micBtn').addEventListener('click', async () => {
     try {
@@ -494,24 +608,26 @@
     const analyser = audioCtx.createAnalyser();
     analyser.fftSize = 512;
     src.connect(analyser);
+
     const data = new Uint8Array(analyser.frequencyBinCount);
-    const meter = $('micMeter');
-    meter.classList.remove('hidden');
+    $('micMeter').classList.remove('hidden');
     $('micBtn').classList.add('hidden');
-    $('hint').textContent = 'Ora soffia forte! 💨';
-    let loud = 0;
+    $('hint').textContent = 'Soffia forte nel microfono! 💨';
+
+    let loudFrames = 0;
     (function listen() {
       if (blown) return;
       analyser.getByteFrequencyData(data);
-      let sum = 0;
-      for (let i = 0; i < data.length; i++) sum += data[i];
+      let sum = data.reduce((a, b) => a + b, 0);
       const avg = sum / data.length;
-      meter.firstElementChild.style.width = Math.min(100, avg * 1.6) + '%';
-      loud = avg > 45 ? loud + 1 : Math.max(0, loud - 1);
-      if (loud > 6) {
+      
+      $('micMeter').firstElementChild.style.width = Math.min(100, avg * 1.8) + '%';
+      loudFrames = avg > 42 ? loudFrames + 1 : Math.max(0, loudFrames - 1);
+
+      if (loudFrames > 5) {
         const lit = candles.find(c => !c.classList.contains('out'));
         if (lit) blowCandle(lit);
-        loud = 0;
+        loudFrames = 0;
       }
       requestAnimationFrame(listen);
     })();
@@ -525,81 +641,80 @@
     setTimeout(() => {
       show('screenWish');
       celebrate();
-    }, 1300);
+    }, 1200);
   }
 
-  // 3: festa
+  /* ---------- EFFETTI FINALI ---------- */
   function celebrate() {
-    // titolo con lettere che saltellano
     const title = $('bigTitle');
     const text = title.textContent;
     title.innerHTML = '';
     [...text].forEach((ch, i) => {
       const s = document.createElement('span');
-      s.textContent = ch === ' ' ? ' ' : ch;
-      s.style.animationDelay = (i * 0.07) + 's';
+      s.textContent = ch === ' ' ? '\u00A0' : ch;
+      s.style.animationDelay = (i * 0.05) + 's';
       title.appendChild(s);
     });
 
     $('musicToggle').classList.remove('hidden');
     playSong();
 
-    burst(220, innerWidth * .25, innerHeight * .35);
-    setTimeout(() => burst(220, innerWidth * .75, innerHeight * .35), 350);
-    setTimeout(() => burst(180, innerWidth * .5, innerHeight * .25), 800);
+    burst(200, window.innerWidth * 0.3, window.innerHeight * 0.3);
+    setTimeout(() => burst(200, window.innerWidth * 0.7, window.innerHeight * 0.3), 400);
 
-    countUp($('age'), AGE, 1600);
+    countUp($('age'), AGE, 1500);
     const days = Math.round(AGE * 365.25);
-    countUp($('days'), days, 2200, true);
-    countUp($('hearts'), Math.round(days * 24 * 60 * 75), 2600, true);
+    countUp($('days'), days, 2000, true);
+    countUp($('hearts'), Math.round(days * 24 * 60 * 75), 2400, true);
 
     launchBalloons();
     runJaguar();
-    setInterval(runJaguar, 12000);
+    setInterval(runJaguar, 10000);
   }
 
-  // Un giaguaro che attraversa lo schermo, a volte con la dottoressa al seguito
-  function runJaguar() {
-    const r = document.createElement('div');
-    r.className = 'runner';
-    r.innerHTML = Math.random() < .5 ? '<span>🐆</span>' : '<span>🐆</span> <span>👩‍⚕️</span>';
-    r.addEventListener('animationend', () => r.remove());
-    document.body.appendChild(r);
-  }
-
-  function countUp(el, target, ms, sep) {
+  function countUp(el, target, ms, format = false) {
     const start = performance.now();
     (function step(now) {
       const p = Math.min(1, (now - start) / ms);
       const v = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      el.textContent = sep ? v.toLocaleString('it-IT') : v;
+      el.textContent = format ? v.toLocaleString('it-IT') : v;
       if (p < 1) requestAnimationFrame(step);
     })(start);
   }
 
-  const balloonColors = ['#ff6fae', '#ffd166', '#06d6a0', '#4cc9f0', '#b5179e', '#f72585', '#ff9a8b'];
+  function runJaguar() {
+    const r = document.createElement('div');
+    r.className = 'runner';
+    r.innerHTML = '🐆 👩‍⚕️';
+    r.addEventListener('animationend', () => r.remove());
+    document.body.appendChild(r);
+  }
+
+  const balloonColors = ['#ff3385', '#ffd166', '#06d6a0', '#4cc9f0', '#ff9a8b'];
   function launchBalloons() {
-    let n = 0;
+    let count = 0;
     const iv = setInterval(() => {
       makeBalloon();
-      if (++n >= 18) clearInterval(iv);
-    }, 450);
+      if (++count >= 15) clearInterval(iv);
+    }, 400);
   }
+
   function makeBalloon() {
     const b = document.createElement('div');
-    if (Math.random() < .4) {
+    if (Math.random() < 0.35) {
       b.className = 'floater';
-      b.textContent = Math.random() < .5 ? '🐆' : '👩‍⚕️';
+      b.textContent = Math.random() < 0.5 ? '🐆' : '👩‍⚕️';
     } else {
       b.className = 'balloon';
       b.style.background = balloonColors[(Math.random() * balloonColors.length) | 0];
     }
-    b.style.left = (Math.random() * 90) + 'vw';
-    b.style.setProperty('--drift', ((Math.random() - .5) * 160) + 'px');
-    b.style.animationDuration = (8 + Math.random() * 6) + 's';
+    b.style.left = (Math.random() * 85 + 5) + 'vw';
+    b.style.setProperty('--drift', ((Math.random() - 0.5) * 150) + 'px');
+    b.style.animationDuration = (7 + Math.random() * 5) + 's';
+    
     b.addEventListener('click', (e) => {
       chime();
-      burst(40, e.clientX, e.clientY);
+      burst(35, e.clientX, e.clientY);
       b.remove();
     });
     b.addEventListener('animationend', () => b.remove());
@@ -607,9 +722,8 @@
   }
 
   $('againBtn').addEventListener('click', () => {
-    burst(200, innerWidth / 2, innerHeight / 2);
+    burst(220, window.innerWidth / 2, window.innerHeight / 2);
     launchBalloons();
-    runJaguar();
   });
 })();
 </script>
