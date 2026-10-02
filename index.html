@@ -76,29 +76,42 @@
     font-size: 1.1rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 24px; font-weight: 500;
   }
 
-  /* Tracker delle chiavi trovate */
-  .key-tracker {
-    display: flex; gap: 12px; justify-content: center; align-items: center;
+  /* Gioco: Giaguaro Run */
+  .game-shell {
+    position: relative; width: 100%; max-width: 760px; border-radius: 24px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(10px);
+  }
+  .hud {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px; font-weight: 800;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .hud .lives { font-size: 1rem; letter-spacing: 1px; white-space: nowrap; }
+  .progress { flex: 1; height: 12px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden; }
+  .progress > div {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--pink), var(--gold)); transition: width 0.3s ease;
+  }
+  .hud .score { font-family: 'Outfit', sans-serif; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  #game {
+    display: block; width: 100%; aspect-ratio: 2 / 1; cursor: pointer;
+    touch-action: manipulation; user-select: none; -webkit-user-select: none;
+  }
+  @media (max-width: 600px) { #game { aspect-ratio: 4 / 3; } }
+  .game-overlay {
+    position: absolute; inset: 0; z-index: 5; overflow-y: auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    padding: 20px 16px; background: rgba(18, 7, 43, 0.78); backdrop-filter: blur(6px);
+  }
+  .game-overlay h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.3rem, 4vw, 1.8rem); margin-bottom: 6px; }
+  .game-overlay p { font-size: 0.98rem; opacity: 0.9; max-width: 440px; line-height: 1.45; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .legend span {
+    padding: 5px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 700;
     background: var(--glass-bg); border: 1px solid var(--glass-border);
-    padding: 10px 24px; border-radius: 999px; margin-bottom: 20px;
-    backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   }
-  .key-slot {
-    font-size: 1.6rem; filter: grayscale(100%) opacity(0.3); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  .key-slot.found { filter: grayscale(0%) opacity(1); transform: scale(1.25) rotate(10deg); }
-
-  /* Area dove si nascondono le chiavi */
-  .interactive-area {
-    position: relative; width: 100%; max-width: 420px; height: 320px;
-    display: flex; justify-content: center; align-items: center; margin: 10px 0;
-  }
-
-  .hidden-key {
-    position: absolute; font-size: 2rem; cursor: pointer; user-select: none;
-    z-index: 4; transition: transform 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-  }
-  .hidden-key:hover { transform: scale(1.3) rotate(15deg); }
+  .controls-hint { margin-top: 14px; opacity: 0.75; font-size: 0.9rem; }
+  .interactive-area { display: flex; justify-content: center; }
 
   /* Regalo 3D con Lucchetto */
   .gift-wrapper { perspective: 1000px; margin: 20px 0; z-index: 3; }
@@ -399,23 +412,32 @@
 
 <!-- 1. GIOCHINO: CACCIA ALLE CHIAVI PER APRIRE IL REGALO -->
 <section class="screen" id="screenGame">
-  <h1 class="game-title script-font fade-in">Sblocca il Regalo! 🔒</h1>
-  <p class="game-sub fade-in" id="gameHint">Trova le 3 chiavi magiche nascoste nella schermata!</p>
-  
-  <div class="key-tracker fade-in">
-    <span class="key-slot" id="slot1">🔑</span>
-    <span class="key-slot" id="slot2">🔑</span>
-    <span class="key-slot" id="slot3">🔑</span>
+  <h1 class="game-title script-font fade-in">Giaguaro Run 🐆</h1>
+  <p class="game-sub fade-in" id="gameHint">Raccogli 24 fiori 🌸, uno per ogni anno, per sbloccare il regalo!</p>
+
+  <div class="game-shell fade-in" id="gameShell">
+    <div class="hud">
+      <span class="lives" id="lives">❤️❤️❤️</span>
+      <div class="progress"><div id="progFill"></div></div>
+      <span class="score" id="score">0/24 🌸</span>
+    </div>
+    <canvas id="game" aria-label="Gioco Giaguaro Run"></canvas>
+    <div class="game-overlay" id="overlay">
+      <div id="overlayBody">
+        <h2>Pronta, Dottoressa? 🩺</h2>
+        <p>Il giaguaro corre da solo: tu fallo saltare per raccogliere i fiori ed evitare i virus. Puoi fare anche il doppio salto!</p>
+      </div>
+      <div class="legend">
+        <span>🌸 raccogli</span><span>🦠 evita</span><span>💊 vita o scudo</span>
+      </div>
+      <button class="btn" id="playBtn">Gioca! ▶</button>
+    </div>
   </div>
+  <p class="controls-hint fade-in" id="controlsHint">Tocca il gioco o premi Spazio per saltare · di nuovo in aria = doppio salto</p>
 
-  <div class="interactive-area fade-in">
-    <!-- 3 Chiavi nascoste in posizioni diverse -->
-    <div class="hidden-key" id="key1" style="top: 15px; left: 20px;">🔑</div>
-    <div class="hidden-key" id="key2" style="bottom: 10px; right: 25px;">🔑</div>
-    <div class="hidden-key" id="key3" style="top: 40%; right: 10px;">🔑</div>
-
-    <!-- Regalo Bloccato -->
-    <div class="gift-wrapper">
+  <div class="interactive-area">
+    <!-- Regalo Bloccato: compare quando vinci -->
+    <div class="gift-wrapper hidden" id="giftWrap">
       <button class="gift" id="gift" aria-label="Regalo di compleanno">
         <div class="lock-badge" id="lockBadge">🔒</div>
         <div class="box"><div class="ribbon-v"></div></div>
@@ -655,34 +677,347 @@
     window.scrollTo(0, 0);
   }
 
-  /* ---------- LOGICA CACCIA ALLE CHIAVI ---------- */
-  let keysFound = 0;
-  function collectKey(keyEl, slotId) {
-    ensureAudio();
-    chime();
-    keyEl.style.transform = 'scale(0) rotate(180deg)';
-    keyEl.style.opacity = '0';
-    keyEl.style.pointerEvents = 'none';
-    
-    $(slotId).classList.add('found');
-    keysFound++;
+  /* ---------- GIOCO: GIAGUARO RUN ---------- */
+  // Mondo in "unità": l'altezza del canvas vale sempre 100, la larghezza varia (WU).
+  const GOAL = AGE;
+  const GROUND = 82;
+  const PX = 22;
+  const GRAVITY = 320;
+  const gc = $('game'), g = gc.getContext('2d');
+  let W = 0, k = 1, WU = 200;
+  let state = 'intro';
+  let attempts = 0, maxLives = 3, giftUnlocked = false;
+  let player, ents, sparks, texts, collected, lives, dist, nextSpawn, speed, invuln, shield, shake, countdown, goFlash, winTimer, time = 0;
 
-    if (keysFound === 3) {
-      $('gameHint').textContent = 'Ottimo lavoro! Ora tocca il regalo per aprirlo! 🎁';
-      $('gift').classList.add('unlocked');
-      $('lockBadge').textContent = '🔓';
-    }
+  // Emoji pre-renderizzate per restare nitide a qualunque scala
+  const sprites = {};
+  function sprite(ch) {
+    if (sprites[ch]) return sprites[ch];
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const x = c.getContext('2d');
+    x.font = '100px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText(ch, 64, 70);
+    return (sprites[ch] = c);
+  }
+  function emoji(ch, x, y, size) { g.drawImage(sprite(ch), x - size / 2, y - size / 2, size, size); }
+
+  function reset() {
+    maxLives = attempts >= 2 ? 5 : 3;
+    player = { y: GROUND, vy: 0, jumps: 0 };
+    ents = []; sparks = []; texts = [];
+    collected = 0; lives = maxLives; dist = 0; nextSpawn = 30;
+    speed = 0; invuln = 0; shield = 0; shake = 0; goFlash = 0;
+    updateHud();
   }
 
-  $('key1').addEventListener('click', (e) => collectKey(e.target, 'slot1'));
-  $('key2').addEventListener('click', (e) => collectKey(e.target, 'slot2'));
-  $('key3').addEventListener('click', (e) => collectKey(e.target, 'slot3'));
+  function updateHud() {
+    $('lives').textContent = '❤️'.repeat(Math.max(0, lives)) + '🤍'.repeat(Math.max(0, maxLives - lives));
+    $('score').textContent = `${collected}/${GOAL} 🌸`;
+    $('progFill').style.width = (collected / GOAL * 100) + '%';
+  }
+
+  function sizeGame() {
+    const r = gc.getBoundingClientRect();
+    if (!r.width) return;
+    W = r.width; k = r.height / 100; WU = W / k;
+    gc.width = Math.round(W * devicePixelRatio);
+    gc.height = Math.round(r.height * devicePixelRatio);
+    draw();
+  }
+
+  function spawn() {
+    const x = WU + 12;
+    let len;
+    const flower = (dx, h) => ents.push({ t: 'flower', x: x + dx, y: GROUND - h, r: 4 });
+    const virus = (dx) => ents.push({ t: 'virus', x: x + dx, y: GROUND - 4.5, r: 4.5 });
+    const flyer = (dx) => ents.push({ t: 'flyer', x: x + dx, y: GROUND - 24, base: GROUND - 24, r: 4.5, ph: Math.random() * 6 });
+    const r = Math.random();
+    if (collected > 4 && Math.random() < (lives < maxLives ? 0.12 : 0.05)) {
+      ents.push({ t: 'pill', x, y: GROUND - 20, r: 4 }); len = 8;
+    } else if (r < 0.28) {
+      virus(0); len = 9;
+      if (collected > 10 && Math.random() < 0.4) { virus(9); len = 18; }
+    } else if (r < 0.43) {
+      flyer(0); flower(-7, 6); flower(7, 6); len = 14;
+    } else if (r < 0.65) {
+      virus(16);
+      [[0, 10], [8, 20], [16, 26], [24, 20], [32, 10]].forEach(([dx, h]) => flower(dx, h));
+      len = 32;
+    } else if (r < 0.8) {
+      flower(0, 6); flower(9, 6); len = 9;
+    } else if (r < 0.9) {
+      flower(0, 20); len = 4;
+    } else {
+      flower(0, 44); len = 4; // serve il doppio salto
+    }
+    nextSpawn = dist + len + 55 + Math.random() * 45;
+  }
+
+  function jump() {
+    if (state !== 'play' && state !== 'countdown') return;
+    if (player.y >= GROUND) { player.vy = -135; player.jumps = 1; }
+    else if (player.jumps < 2) { player.vy = -115; player.jumps = 2; puff(PX, player.y, '#ffffff', 6); }
+    else return;
+    if (audioCtx) tone(520 + player.jumps * 140, audioCtx.currentTime, 0.09, 0.05);
+  }
+
+  function puff(x, y, color, n = 12) {
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, v = 15 + Math.random() * 35;
+      sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 0.5 + Math.random() * 0.3, color });
+    }
+  }
+  function addText(x, y, txt) { texts.push({ x, y, txt, life: 1 }); }
+
+  function collect(e) {
+    if (e.t === 'pill') {
+      if (lives < maxLives) { lives++; addText(e.x, e.y - 6, '+❤️'); }
+      else { shield = 5; addText(e.x, e.y - 6, 'Scudo! 💊'); }
+      puff(e.x, e.y, '#7cffb2');
+      chime();
+    } else {
+      collected++;
+      puff(e.x, e.y, '#ff8fc4');
+      addText(e.x, e.y - 6, '+1');
+      if (audioCtx) tone(700 + collected * 25, audioCtx.currentTime, 0.14, 0.08);
+      if (collected === 8) addText(PX + 30, 30, 'Grinta da giaguaro! 🐆');
+      if (collected === 16) addText(PX + 30, 30, 'Ci sei quasi! 💪');
+      if (collected === GOAL - 1) addText(PX + 30, 30, "Ne manca solo uno! ✨");
+      if (collected >= GOAL) win();
+    }
+    updateHud();
+  }
+
+  function hit(e) {
+    lives--; invuln = 1.4; shake = 0.35; e.dead = true;
+    puff(e.x, e.y, '#9dff6a', 16);
+    addText(PX, player.y - 20, 'Ahi! 🦠');
+    if (audioCtx) { const t = audioCtx.currentTime; tone(180, t, 0.2, 0.2); tone(110, t + 0.08, 0.3, 0.2); }
+    updateHud();
+    if (lives <= 0) gameOver();
+  }
+
+  function gameOver() {
+    state = 'over';
+    attempts++;
+    const easyNow = attempts === 2;
+    setTimeout(() => showOverlay(
+      `<h2>Oh no, i virus hanno vinto! 🦠</h2>
+       <p>Hai raccolto <strong>${collected}/${GOAL}</strong> fiori. ${collected >= 16 ? 'Eri vicinissima!' : 'Il giaguaro non si arrende mai!'}</p>
+       ${easyNow ? '<p>💖 <strong>Bonus:</strong> da ora hai 5 vite e il giaguaro va un po\' più piano.</p>' : ''}`,
+      'Riprova 🔁'), 700);
+  }
+
+  function win() {
+    state = 'won'; winTimer = 1.8;
+    chime();
+    const r = gc.getBoundingClientRect();
+    burst(160, r.left + PX * k, r.top + (player.y - 10) * k);
+  }
+
+  function revealGift() {
+    state = 'done';
+    $('gameShell').classList.add('hidden');
+    $('controlsHint').classList.add('hidden');
+    $('gameHint').textContent = 'Ce l\'hai fatta! Tocca il regalo per aprirlo 🎁';
+    $('giftWrap').classList.remove('hidden');
+    $('giftWrap').classList.add('fade-in');
+    setTimeout(() => {
+      $('lockBadge').textContent = '🔓';
+      chime();
+      setTimeout(() => { $('gift').classList.add('unlocked'); giftUnlocked = true; }, 500);
+    }, 700);
+  }
+
+  function update(dt) {
+    time += dt;
+    if (state === 'countdown') {
+      countdown -= dt;
+      if (countdown <= 0) { state = 'play'; goFlash = 0.7; }
+    }
+    if (state === 'play') speed = (attempts >= 2 ? 52 : 60) + (collected / GOAL) * 32;
+    if (state === 'countdown') speed = 45;
+    if (state === 'won') speed *= 0.97;
+
+    player.vy += GRAVITY * dt;
+    player.y += player.vy * dt;
+    if (player.y >= GROUND) { player.y = GROUND; player.vy = 0; player.jumps = 0; }
+
+    const move = speed * dt;
+    dist += move;
+    for (const e of ents) {
+      e.x -= move;
+      if (e.t === 'flyer') e.y = e.base + Math.sin(time * 4 + e.ph) * 2;
+      if (e.t === 'flower' || e.t === 'pill') e.bob = Math.sin(time * 5 + e.x * 0.3) * 0.8;
+    }
+
+    if (state === 'play') {
+      if (dist >= nextSpawn) spawn();
+      invuln = Math.max(0, invuln - dt);
+      shield = Math.max(0, shield - dt);
+      goFlash = Math.max(0, goFlash - dt);
+      const cx = PX, cy = player.y - 6.5;
+      for (const e of ents) {
+        if (e.dead || state !== 'play') continue;
+        const d = Math.hypot(e.x - cx, e.y - cy);
+        if (e.t === 'flower' || e.t === 'pill') {
+          if (d < e.r + 6) { e.dead = true; collect(e); }
+        } else if (d < e.r + 3.8) { // hitbox un po' indulgente
+          if (shield > 0) { e.dead = true; puff(e.x, e.y, '#7cffb2', 14); addText(e.x, e.y - 6, 'Bam! 💥'); }
+          else if (invuln <= 0) hit(e);
+        }
+      }
+    }
+    if (state === 'won') { winTimer -= dt; if (winTimer <= 0) revealGift(); }
+
+    shake = Math.max(0, shake - dt);
+    ents = ents.filter(e => !e.dead && e.x > -15);
+    for (const s of sparks) { s.x += s.vx * dt; s.y += s.vy * dt; s.vy += 60 * dt; s.life -= dt; }
+    sparks = sparks.filter(s => s.life > 0);
+    for (const t of texts) { t.y -= 12 * dt; t.life -= dt * 0.8; }
+    texts = texts.filter(t => t.life > 0);
+  }
+
+  function draw() {
+    if (!W) return;
+    g.setTransform(devicePixelRatio * k, 0, 0, devicePixelRatio * k, 0, 0);
+    g.clearRect(0, 0, WU, 100);
+    g.save();
+    if (shake > 0) g.translate((Math.random() - 0.5) * shake * 6, (Math.random() - 0.5) * shake * 6);
+
+    // Colline lontane (parallasse)
+    g.fillStyle = 'rgba(255,255,255,0.05)';
+    g.beginPath(); g.moveTo(0, GROUND);
+    for (let x = 0; x <= WU + 4; x += 4) {
+      const p = x + dist * 0.25;
+      g.lineTo(x, GROUND - 14 - Math.sin(p * 0.045) * 7 - Math.sin(p * 0.11) * 3);
+    }
+    g.lineTo(WU + 4, GROUND); g.fill();
+
+    // Terreno
+    const grd = g.createLinearGradient(0, GROUND, 0, 100);
+    grd.addColorStop(0, 'rgba(255,51,133,0.35)');
+    grd.addColorStop(1, 'rgba(91,19,128,0.1)');
+    g.fillStyle = grd; g.fillRect(-5, GROUND, WU + 10, 100 - GROUND);
+    g.fillStyle = 'rgba(255,204,0,0.85)'; g.fillRect(-5, GROUND, WU + 10, 0.6);
+    g.fillStyle = 'rgba(255,255,255,0.25)';
+    for (let x = -(dist % 20); x < WU; x += 20) g.fillRect(x, GROUND + 6, 8, 0.8);
+    for (let x = -((dist * 1.4) % 33); x < WU; x += 33) g.fillRect(x, GROUND + 12, 4, 0.8);
+
+    // Oggetti
+    for (const e of ents) {
+      if (e.t === 'flyer') {
+        g.fillStyle = 'rgba(0,0,0,0.25)';
+        g.beginPath(); g.ellipse(e.x, GROUND + 1, 3.5, 0.9, 0, 0, Math.PI * 2); g.fill();
+      }
+      const ch = e.t === 'flower' ? '🌸' : e.t === 'pill' ? '💊' : '🦠';
+      emoji(ch, e.x, e.y + (e.bob || 0), e.r * 2.5);
+    }
+
+    // Giaguaro
+    const air = GROUND - player.y;
+    g.fillStyle = 'rgba(0,0,0,0.3)';
+    g.beginPath(); g.ellipse(PX, GROUND + 1, Math.max(3, 7 - air * 0.1), 1.2, 0, 0, Math.PI * 2); g.fill();
+    if (!(invuln > 0 && Math.floor(time * 12) % 2)) {
+      g.save();
+      const run = state === 'play' || state === 'countdown' || state === 'won';
+      const bob = air === 0 && run ? -Math.abs(Math.sin(time * 14)) * 1.4 : 0;
+      g.translate(PX, player.y - 7 + bob);
+      g.rotate(air > 0 ? Math.max(-0.35, Math.min(0.35, player.vy / 400)) : 0);
+      g.scale(-1, 1);
+      emoji('🐆', 0, 0, 17);
+      g.restore();
+    }
+    if (shield > 0) {
+      g.strokeStyle = `rgba(124,255,178,${0.4 + Math.sin(time * 10) * 0.25})`;
+      g.lineWidth = 0.8;
+      g.beginPath(); g.arc(PX, player.y - 7, 11, 0, Math.PI * 2); g.stroke();
+    }
+
+    // Particelle e scritte
+    for (const s of sparks) {
+      g.globalAlpha = Math.min(1, s.life * 2);
+      g.fillStyle = s.color;
+      g.beginPath(); g.arc(s.x, s.y, 0.8, 0, Math.PI * 2); g.fill();
+    }
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = '800 5px Outfit, sans-serif';
+    for (const t of texts) {
+      g.globalAlpha = Math.min(1, t.life * 1.5);
+      g.fillStyle = '#fff';
+      g.fillText(t.txt, t.x, t.y);
+    }
+    g.globalAlpha = 1;
+
+    // Messaggi grandi al centro
+    const big = (txt, color = '#ffe680') => {
+      g.font = '800 16px Outfit, sans-serif';
+      g.fillStyle = color;
+      g.shadowColor = 'rgba(0,0,0,0.5)'; g.shadowBlur = 3;
+      g.fillText(txt, WU / 2, 40);
+      g.shadowBlur = 0;
+    };
+    if (state === 'countdown') big(String(Math.ceil(countdown / 0.8)));
+    else if (goFlash > 0) big('Via! 🐆');
+    else if (state === 'won') big('🔓 Sbloccato!');
+    g.restore();
+  }
+
+  let lastT = 0, gameRaf = null;
+  function frame(now) {
+    const dt = Math.max(0, Math.min(0.033, (now - lastT) / 1000));
+    lastT = now;
+    update(dt);
+    draw();
+    gameRaf = ['countdown', 'play', 'won', 'over'].includes(state) && !(state === 'over' && !sparks.length && !texts.length && !shake)
+      ? requestAnimationFrame(frame) : null;
+  }
+  function startLoop() {
+    if (gameRaf) return;
+    lastT = performance.now();
+    gameRaf = requestAnimationFrame(frame);
+  }
+
+  function showOverlay(html, btn) {
+    $('overlayBody').innerHTML = html;
+    $('playBtn').textContent = btn;
+    $('overlay').classList.remove('hidden');
+    $('playBtn').focus({ preventScroll: true });
+  }
+
+  $('playBtn').addEventListener('click', () => {
+    ensureAudio();
+    $('overlay').classList.add('hidden');
+    if (state === 'paused') { state = 'play'; startLoop(); return; }
+    reset();
+    state = 'countdown'; countdown = 2.4;
+    startLoop();
+  });
+
+  gc.addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
+  addEventListener('keydown', (e) => {
+    if ($('screenGame').classList.contains('hidden') || e.target.tagName === 'BUTTON') return;
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+      e.preventDefault();
+      if (!e.repeat) jump();
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && (state === 'play' || state === 'countdown')) {
+      state = 'paused';
+      showOverlay('<h2>Pausa ⏸️</h2><p>Il giaguaro ti aspetta.</p>', 'Riprendi ▶');
+    }
+  });
+
+  addEventListener('resize', sizeGame);
+  reset();
+  sizeGame();
+  document.fonts && document.fonts.ready.then(sizeGame);
 
   $('gift').addEventListener('click', () => {
-    if (keysFound < 3) {
-      $('gameHint').textContent = 'Trova prima tutte e 3 le chiavi! 🔑';
-      return;
-    }
+    if (!giftUnlocked) return;
     ensureAudio();
     chime();
     $('gift').classList.add('open');
