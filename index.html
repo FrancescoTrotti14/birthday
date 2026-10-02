@@ -3,11 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Buon compleanno Elisa! 🎂</title>
+<title>Un Regalo Per Elisa! 🎁</title>
 <meta name="description" content="Tanti auguri Elisa per i tuoi 24 anni!">
-<meta property="og:title" content="🎂 Buon compleanno Elisa!">
-<meta property="og:description" content="Una sorpresa speciale per i tuoi 24 anni. Aprila!">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Pacifico&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
@@ -65,33 +63,45 @@
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  /* Titoli stilizzati */
   .script-font { font-family: 'Pacifico', cursive; font-weight: 400; }
   
-  /* ---------- SCHERMATA 1: REGALO ---------- */
-  .gift-title {
-    font-size: clamp(2.2rem, 7vw, 3.8rem);
+  /* ---------- SCHERMATA 1: MINI-GIOCO CACCIA AL REGALO ---------- */
+  .game-title {
+    font-size: clamp(2rem, 6vw, 3.2rem);
     background: linear-gradient(135deg, #fff 30%, var(--gold-glow));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 12px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    margin-bottom: 8px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
   }
-  .gift-sub {
-    font-size: 1.15rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 40px; font-weight: 500;
+  .game-sub {
+    font-size: 1.1rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 24px; font-weight: 500;
   }
 
-  .peek-badge {
-    display: inline-flex; gap: 12px; padding: 10px 22px;
+  /* Tracker delle chiavi trovate */
+  .key-tracker {
+    display: flex; gap: 12px; justify-content: center; align-items: center;
     background: var(--glass-bg); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px); border-radius: 999px; margin-bottom: 30px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    padding: 10px 24px; border-radius: 999px; margin-bottom: 20px;
+    backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   }
-  .peek-badge span { font-size: 1.6rem; animation: float 3s infinite ease-in-out; }
-  .peek-badge span:nth-child(2) { animation-delay: 0.3s; }
-  .peek-badge span:nth-child(3) { animation-delay: 0.6s; }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .key-slot {
+    font-size: 1.6rem; filter: grayscale(100%) opacity(0.3); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .key-slot.found { filter: grayscale(0%) opacity(1); transform: scale(1.25) rotate(10deg); }
 
-  /* Regalo 3D */
-  .gift-wrapper { perspective: 1000px; margin: 20px 0; }
+  /* Area dove si nascondono le chiavi */
+  .interactive-area {
+    position: relative; width: 100%; max-width: 420px; height: 320px;
+    display: flex; justify-content: center; align-items: center; margin: 10px 0;
+  }
+
+  .hidden-key {
+    position: absolute; font-size: 2rem; cursor: pointer; user-select: none;
+    z-index: 4; transition: transform 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  }
+  .hidden-key:hover { transform: scale(1.3) rotate(15deg); }
+
+  /* Regalo 3D con Lucchetto */
+  .gift-wrapper { perspective: 1000px; margin: 20px 0; z-index: 3; }
   .gift {
     position: relative; width: 180px; height: 180px; cursor: pointer;
     background: none; border: none; transform-style: preserve-3d;
@@ -131,10 +141,57 @@
   .gift .bow::before { left: 0; transform: rotate(-25deg); }
   .gift .bow::after { right: 0; transform: rotate(25deg) scaleX(-1); }
 
+  .lock-badge {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -10%);
+    font-size: 2.5rem; z-index: 10; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    transition: all 0.5s;
+  }
+
+  .gift.unlocked .lock-badge { opacity: 0; transform: translate(-50%, -50%) scale(2); pointer-events: none; }
   .gift.open .lid { transform: translateY(-140px) rotateX(45deg) rotateZ(-15deg); opacity: 0.9; }
   .gift.open { animation: none; }
 
-  /* ---------- SCHERMATA 2: TORTA DECORATA ---------- */
+  /* ---------- SCHERMATA 2: APERTURA PROFUMO ---------- */
+  .perfume-reveal-card {
+    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px); border-radius: 28px; padding: 36px 28px;
+    max-width: 420px; width: 100%; box-shadow: var(--glass-shadow);
+    display: flex; flex-direction: column; align-items: center; position: relative;
+  }
+
+  /* Flacone del profumo 3D CSS */
+  .perfume-bottle {
+    position: relative; width: 140px; height: 180px; margin: 20px 0;
+    animation: floatPerfume 3s infinite ease-in-out;
+  }
+  @keyframes floatPerfume { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+  .perfume-cap {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 48px; height: 35px; background: linear-gradient(135deg, #ffd700, #ffb700);
+    border-radius: 6px; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .perfume-nozzle {
+    position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
+    width: 16px; height: 15px; background: #e0e0e0; border-radius: 2px;
+  }
+  .perfume-body {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 135px;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.85), rgba(255, 192, 203, 0.6));
+    border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 24px;
+    backdrop-filter: blur(8px); box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.5), 0 15px 35px rgba(0,0,0,0.3);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .perfume-label {
+    background: rgba(255, 255, 255, 0.9); padding: 8px 12px; border-radius: 8px;
+    color: #4a1259; font-family: 'Outfit', sans-serif; font-weight: 800;
+    font-size: 0.85rem; text-align: center; text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15); width: 85%;
+  }
+  .perfume-label small { display: block; font-size: 0.65rem; color: #ff3385; margin-top: 2px; font-weight: 600; }
+
+  /* ---------- SCHERMATA 3: TORTA DECORATA ---------- */
   .wish {
     font-size: clamp(2rem, 6vw, 3rem);
     background: linear-gradient(135deg, #fff, var(--gold-glow));
@@ -142,7 +199,6 @@
   }
   .hint { opacity: 0.85; margin-top: 8px; margin-bottom: 30px; font-size: 1.1rem; }
 
-  /* Torta CSS Avanzata */
   .cake-container {
     position: relative; width: 300px; height: 320px;
     display: flex; justify-content: center; align-items: flex-end;
@@ -166,7 +222,6 @@
     background: linear-gradient(135deg, #73391d, #a6582e);
   }
   
-  /* Glassa e decorazioni */
   .drips {
     position: absolute; top: 0; left: -2px; right: -2px; height: 32px;
     background: #fff5ea; border-radius: 16px 16px 8px 8px;
@@ -177,7 +232,6 @@
     background: radial-gradient(circle at 12px 0, #fff5ea 12px, transparent 13px) 0 0 / 28px 20px repeat-x;
   }
 
-  /* Targhetta di Cioccolato sulla Torta */
   .choco-badge {
     position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
     background: linear-gradient(135deg, #3d1e10, #26130a);
@@ -186,7 +240,6 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.4); z-index: 5; white-space: nowrap;
   }
 
-  /* Candeline */
   .candles-group {
     position: absolute; bottom: 185px; left: 50%; transform: translateX(-50%);
     display: flex; gap: 18px; align-items: flex-end; z-index: 10;
@@ -206,8 +259,7 @@
     background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffea75 35%, #ff6800 75%, transparent 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     animation: flameBurn 0.15s infinite alternate ease-in-out;
-    transform-origin: center bottom;
-    filter: drop-shadow(0 0 18px #ff9900);
+    transform-origin: center bottom; filter: drop-shadow(0 0 18px #ff9900);
   }
   @keyframes flameBurn {
     0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
@@ -227,14 +279,13 @@
     100% { opacity: 0; transform: translate(-80%, -90px) scale(4); filter: blur(4px); }
   }
 
-  /* ---------- BOTTONI MODERNIZZATI ---------- */
+  /* ---------- BOTTONI ---------- */
   .btn-group { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px; margin-top: 10px; }
   
   .btn {
     border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700; font-size: 1.05rem; color: #fff; padding: 16px 32px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #ff3385 0%, #ff66b2 100%);
+    border-radius: 999px; background: linear-gradient(135deg, #ff3385 0%, #ff66b2 100%);
     box-shadow: 0 10px 28px rgba(255, 51, 133, 0.45);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -246,7 +297,6 @@
     background: var(--glass-bg); border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px); box-shadow: none; font-size: 0.95rem; padding: 12px 24px;
   }
-  .btn.ghost:hover { background: rgba(255, 255, 255, 0.18); }
 
   .mic-meter {
     width: 200px; height: 10px; border-radius: 6px; background: rgba(255,255,255,0.15);
@@ -254,7 +304,7 @@
   }
   .mic-meter > div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), #ff5500); transition: width 0.08s ease; }
 
-  /* ---------- SCHERMATA 3: SCHEDA AUGURI & CARD ---------- */
+  /* ---------- SCHERMATA 4: AUGURI FINALE ---------- */
   .big-title {
     font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1;
     font-family: 'Outfit', sans-serif; font-weight: 800;
@@ -293,7 +343,6 @@
     margin-top: 24px; color: var(--gold);
   }
 
-  /* Grid Statistiche */
   .stats-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 14px; margin-top: 24px; width: 100%; max-width: 560px;
@@ -348,23 +397,62 @@
 <canvas id="confetti"></canvas>
 <button class="music-toggle hidden" id="musicToggle" aria-label="Attiva/Disattiva musica">🎵</button>
 
-<!-- 1. SCHERMATA REGALO -->
-<section class="screen" id="screenGift">
-  <div class="peek-badge fade-in">
-    <span>🐆</span><span>👩‍⚕️</span><span>✨</span>
-  </div>
-  <h1 class="gift-title script-font fade-in">Ehi Elisa! 💌</h1>
-  <p class="gift-sub fade-in">C'è una sorpresa speciale per te... Tocca il regalo per aprirlo!</p>
+<!-- 1. GIOCHINO: CACCIA ALLE CHIAVI PER APRIRE IL REGALO -->
+<section class="screen" id="screenGame">
+  <h1 class="game-title script-font fade-in">Sblocca il Regalo! 🔒</h1>
+  <p class="game-sub fade-in" id="gameHint">Trova le 3 chiavi magiche nascoste nella schermata!</p>
   
-  <div class="gift-wrapper fade-in">
-    <button class="gift" id="gift" aria-label="Apri il regalo di compleanno">
-      <div class="box"><div class="ribbon-v"></div></div>
-      <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
-    </button>
+  <div class="key-tracker fade-in">
+    <span class="key-slot" id="slot1">🔑</span>
+    <span class="key-slot" id="slot2">🔑</span>
+    <span class="key-slot" id="slot3">🔑</span>
+  </div>
+
+  <div class="interactive-area fade-in">
+    <!-- 3 Chiavi nascoste in posizioni diverse -->
+    <div class="hidden-key" id="key1" style="top: 15px; left: 20px;">🔑</div>
+    <div class="hidden-key" id="key2" style="bottom: 10px; right: 25px;">🔑</div>
+    <div class="hidden-key" id="key3" style="top: 40%; right: 10px;">🔑</div>
+
+    <!-- Regalo Bloccato -->
+    <div class="gift-wrapper">
+      <button class="gift" id="gift" aria-label="Regalo di compleanno">
+        <div class="lock-badge" id="lockBadge">🔒</div>
+        <div class="box"><div class="ribbon-v"></div></div>
+        <div class="lid"><div class="ribbon-v"></div><div class="bow"></div></div>
+      </button>
+    </div>
   </div>
 </section>
 
-<!-- 2. SCHERMATA TORTA -->
+<!-- 2. RIVELAZIONE PROFUMO -->
+<section class="screen hidden" id="screenPerfume">
+  <div class="perfume-reveal-card fade-in">
+    <h2 class="script-font" style="font-size: 2rem; color: var(--gold); margin-bottom: 8px;">✨ Sorpresa! ✨</h2>
+    <p style="opacity: 0.9; font-weight: 600;">Hai trovato il tuo regalo!</p>
+
+    <!-- Profumo 3D CSS -->
+    <div class="perfume-bottle">
+      <div class="perfume-cap"></div>
+      <div class="perfume-nozzle"></div>
+      <div class="perfume-body">
+        <div class="perfume-label">
+          Elisa
+          <small>Eau de Parfum</small>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin: 10px 0 20px; font-size: 1.05rem; line-height: 1.5;">
+      Una fragranza unica e speciale per i tuoi 24 anni:<br>
+      <strong>Note di Grinta & Eleganza 🐆🌸</strong>
+    </p>
+
+    <button class="btn" id="toCakeBtn">Vai alla Torta! 🎂</button>
+  </div>
+</section>
+
+<!-- 3. SCHERMATA TORTA -->
 <section class="screen hidden" id="screenCake">
   <h1 class="wish fade-in script-font">Esprimi un desiderio ✨</h1>
   <p class="hint" id="hint">Soffia sulle candeline o toccale per spegnerle!</p>
@@ -398,13 +486,14 @@
   </div>
 </section>
 
-<!-- 3. SCHERMATA AUGURI FINALE -->
+<!-- 4. SCHERMATA AUGURI FINALE -->
 <section class="screen hidden" id="screenWish">
   <h1 class="big-title" id="bigTitle">Tanti Auguri Elisa!</h1>
   
   <div class="badge-container fade-in">
     <div class="badge">👩‍⚕️ Dott.ssa Elisa</div>
     <div class="badge">🐆 Grinta da Giaguaro</div>
+    <div class="badge">🌸 Perfume Lover</div>
   </div>
 
   <div class="age-counter" id="age">0</div>
@@ -412,9 +501,9 @@
 
   <div class="glass-card fade-in">
     <p>Cara Elisa,</p>
-    <p>Oggi si festeggia una persona davvero unica: <strong>tu</strong>! 🎉</p>
-    <p>Che questi 24 anni ti portino sorrisi contagiosi, avventure indimenticabili, sogni realizzati e tante persone speciali pronte a sostenerti sempre.</p>
-    <p>Continua ad affrontare ogni sfida con la determinazione e la <strong>grinta di un giaguaro 🐆</strong> e a prenderti cura degli altri con il cuore e la passione di una vera <strong>dottoressa 👩‍⚕️</strong>.</p>
+    <p>Oggi si festeggia una persona davvero speciale: <strong>tu</strong>! 🎉</p>
+    <p>Che questi 24 anni ti portino sorrisi contagiosi, momenti indimenticabili, sogni realizzati e tante novità meravigliose (e profumate!).</p>
+    <p>Continua ad affrontare ogni sfida con la determinazione e la <strong>grinta di un giaguaro 🐆</strong> e a prenderti cura degli altri con il cuore e la passione di una grande <strong>dottoressa 👩‍⚕️</strong>.</p>
     <p class="sign">Buon Compleanno! 🥳</p>
   </div>
 
@@ -475,7 +564,7 @@
         rot: Math.random() * 360, vr: (Math.random() - 0.5) * 12,
         color: colors[(Math.random() * colors.length) | 0],
         life: 0, max: 150 + Math.random() * 80,
-        emoji: Math.random() < 0.15 ? (Math.random() < 0.5 ? '🐆' : '👩‍⚕️') : null
+        emoji: Math.random() < 0.15 ? (Math.random() < 0.5 ? '🐆' : '✨') : null
       });
     }
     if (!rafId) loop();
@@ -566,15 +655,46 @@
     window.scrollTo(0, 0);
   }
 
-  // Regalo -> Torta
+  /* ---------- LOGICA CACCIA ALLE CHIAVI ---------- */
+  let keysFound = 0;
+  function collectKey(keyEl, slotId) {
+    ensureAudio();
+    chime();
+    keyEl.style.transform = 'scale(0) rotate(180deg)';
+    keyEl.style.opacity = '0';
+    keyEl.style.pointerEvents = 'none';
+    
+    $(slotId).classList.add('found');
+    keysFound++;
+
+    if (keysFound === 3) {
+      $('gameHint').textContent = 'Ottimo lavoro! Ora tocca il regalo per aprirlo! 🎁';
+      $('gift').classList.add('unlocked');
+      $('lockBadge').textContent = '🔓';
+    }
+  }
+
+  $('key1').addEventListener('click', (e) => collectKey(e.target, 'slot1'));
+  $('key2').addEventListener('click', (e) => collectKey(e.target, 'slot2'));
+  $('key3').addEventListener('click', (e) => collectKey(e.target, 'slot3'));
+
   $('gift').addEventListener('click', () => {
+    if (keysFound < 3) {
+      $('gameHint').textContent = 'Trova prima tutte e 3 le chiavi! 🔑';
+      return;
+    }
     ensureAudio();
     chime();
     $('gift').classList.add('open');
     const r = $('gift').getBoundingClientRect();
-    burst(140, r.left + r.width / 2, r.top + 20);
-    setTimeout(() => show('screenCake'), 1000);
-  }, { once: true });
+    burst(150, r.left + r.width / 2, r.top + 20);
+    setTimeout(() => show('screenPerfume'), 1000);
+  });
+
+  // Da Profumo -> Torta
+  $('toCakeBtn').addEventListener('click', () => {
+    show('screenCake');
+  });
 
   // Candeline
   const candles = [...document.querySelectorAll('[data-candle]')];
